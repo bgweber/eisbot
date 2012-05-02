@@ -1,0 +1,7 @@
+#Notes on configuring EISBot.
+
+= Getting Started =
+
+How to run EISBot. 
+
+
