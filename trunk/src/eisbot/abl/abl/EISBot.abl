@@ -1,0 +1,3264 @@
+package eisbot.abl.java;
+
+import eisbot.proxy.*;
+import eisbot.proxy.wmes.*;
+import eisbot.buildorder.*;
+import eisbot.proxy.wmes.unit.*;
+import eisbot.proxy.wmes.unit.protoss.*;
+import eisbot.proxy.filter.*;
+import eisbot.abl.*;
+import eisbot.abl.actions.*;
+import eisbot.abl.sensors.*;
+import eisbot.abl.wmes.*;
+import eisbot.abl.wmes.requests.*;
+import eisbot.abl.wmes.prediction.*; 
+import java.awt.Point;
+
+constants eisbot.abl.StarCraftConstants;
+/**
+ *   
+ */   
+behaving_entity EISBotAAAI { 
+
+	// actions
+	register act attackMovePixel(int, int, int) with AttackMovePixel;
+	register act attackMoveTile(int, int, int) with AttackMoveTile;
+	register act attackUnit(int, int) with AttackUnit;
+	register act rightClickPixel(int, int, int) with RightClickPixel;
+	register act rightClickTile(int, int, int) with RightClickTile;
+	register act rightClickUnit(int, int) with RightClickUnit;
+	register act train(int, int) with Train;
+	register act buildTile(int, int, int, int) with BuildTile;
+	register act buildAddon(int, int) with BuildAddon;
+    register act research(int, int) with Research;
+	register act upgrade(int, int) with Upgrade;
+	register act stop(int) with Stop;
+	register act holdPosition(int) with HoldPosition;
+	register act patrolPixel(int, int, int) with PatrolPixel;  
+	register act patrolTile(int, int, int) with PatrolTile;
+	register act follow(int, int) with Follow;
+	register act setRallyPositionPixel(int, int, int) with SetRallyPositionPixel;
+	register act setRallyPositionTile(int, int, int) with SetRallyPositionTile;
+	register act setRallyUnit(int, int) with SetRallyUnit;
+	register act repair(int, int) with Repair;
+	register act morph(int, int) with Morph;
+	register act burrow(int) with Burrow;
+	register act unburrow(int) with Unburrow;
+	register act siege(int) with Siege;
+	register act unsiege(int) with Unsiege;
+	register act cloak(int) with Cloak;
+	register act decloak(int) with Decloak;
+	register act lift(int, int) with Lift;
+	register act landTile(int, int, int) with LandTile;
+	register act load(int, int) with Load;
+	register act unload(int, int) with Unload;
+	register act unloadAll(int) with UnloadAll;
+	register act unloadAllPositionPixel(int, int, int) with UnloadAllPositionPixel;
+	register act unloadAllPositionTile(int, int, int) with UnloadAllPositionTile;
+	register act cancelConstruction(int) with CancelConstruction;
+	register act haltConstruction(int) with HaltConstruction;
+	register act cancelMorph(int) with CancelMorph;
+	register act cancelTrain(int) with CancelTrain;
+	register act cancelTrainSlot(int, int) with CancelTrainSlot;
+	register act cancelAddon(int) with CancelAddon;
+	register act cancelResearch(int) with CancelResearch;
+	register act cancelUpgrade(int) with CancelUpgrade;
+	register act useTech(int, int) with UseTech;
+	register act useTechPositionPixel(int, int, int, int) with UseTechPositionPixel;
+	register act useTechPositionTile(int, int, int, int) with UseTechPositionTile;
+    register act useTechTarget(int, int, int) with UseTechTarget;
+ 
+	// squad actions
+//    register act createSquad(int, int) with CreateSquad;
+//    register act deleteSquad(int) with DeleteSquad;
+//    register act addUnit(int, int) with AddUnit;
+//    register act deleteUnit(int, int) with DeleteUnit;
+    register act squadMove(int, int, int) with SquadMove;  
+    register act squadHold(int) with SquadHold;   
+    register act squadAttackTile(int, int, int) with SquadAttackTile; 
+    register act squadAttackTarget(int, int) with SquadAttackTarget; 
+ 	  
+	// unit sensors 
+    register wme GeyserWME with GasSensor;
+    register wme MineralWME with MineralSensor;
+    register wme PlayerUnitWME with PlayerUnitSensor;
+    register wme EnemyUnitWME with EnemyUnitSensor;
+    register wme ParticleWME with ParticleFilterSensor;
+    register wme NeutralUnitWME with NeutralUnitSensor;
+    register wme NeutralEggWME with NeutralUnitSensor; 
+    
+	// Protoss units
+    register wme AirUnitWME with PlayerUnitSensor;
+    register wme ArbitorWME with PlayerUnitSensor;
+    register wme ArchivesWME with PlayerUnitSensor;
+    register wme ArchonWME with PlayerUnitSensor;
+    register wme AssimilatorWME with PlayerUnitSensor;
+    register wme AttackUnitWME with PlayerUnitSensor;
+    register wme BuildingWME with PlayerUnitSensor;
+    register wme CannonWME with PlayerUnitSensor;
+    register wme CarrierWME with PlayerUnitSensor;
+    register wme CitadelWME with PlayerUnitSensor;
+    register wme CorsairWME with PlayerUnitSensor;
+    register wme CyberneticsCoreWME with PlayerUnitSensor;
+    register wme DarkArchonWME with PlayerUnitSensor;
+    register wme DarkTemplarWME with PlayerUnitSensor;
+    register wme DragoonWME with PlayerUnitSensor;
+    register wme FleetBeaconWME with PlayerUnitSensor;
+    register wme ForgeWME with PlayerUnitSensor;
+    register wme GatewayWME with PlayerUnitSensor;
+    register wme GroundUnitWME with PlayerUnitSensor;
+    register wme HighTemplarWME with PlayerUnitSensor;
+    register wme NexusWME with PlayerUnitSensor;
+    register wme ObservatoryWME with PlayerUnitSensor;
+    register wme ObserverWME with PlayerUnitSensor;
+    register wme ProbeWME with PlayerUnitSensor;
+    register wme PylonWME with PlayerUnitSensor;
+    register wme ReaverWME with PlayerUnitSensor;
+    register wme RoboticsFacilityWME with PlayerUnitSensor;
+    register wme ScoutWME with PlayerUnitSensor;
+    register wme ShuttleWME with PlayerUnitSensor;
+    register wme StargateWME with PlayerUnitSensor;
+    register wme SupportBayWME with PlayerUnitSensor;
+    register wme TribunalWME with PlayerUnitSensor;
+    register wme ZealotWME with PlayerUnitSensor;
+    
+    // other sensors
+    register wme PlayerWME with PlayerSensor;
+    register wme BaseLocationWME with BaseLocationSensor;
+    register wme StartingLocationWME with StartingLocationSensor;
+    register wme RegionWME with RegionSensor;
+    register wme TechTypenWME with TechTypeSensor;
+    register wme UpgradeTypeWME with UpgradeTypeSensor;
+    register wme UnitTypeWME with UnitTypeSensor;
+    register wme MapWME with MapSensor; 
+    register wme NewUnitWME with NewUnitSensor;
+    register wme ReconWME with ReconSensor; 
+ 
+	int earliestObsTiming = 7200;	// 5 minutes
+    int maxProbes = 70; 
+    int maxSupplyReq = 40;
+    int workersPerNexus = 18;	// max mining workers per nexus
+       
+    boolean waitForPrereqs = true;  
+	int nextNexusRequest = 0;
+
+    boolean offsetPylons = false;  
+    int pylonPurpose = 0;
+
+	int squadCounter = 0;	
+//	int squadMinSpread = 150; 
+//	int squadMaxSpread = 250; 
+	int minSquadSize = 3;    
+	int maxSquadSize = 8;   
+       
+/******************************************************************************
+ * Start up
+ *****************************************************************************/
+
+	/**
+	 * Wait for some of the sensors to Fire.
+	 */
+	sequential behavior startup() {
+
+		with (success_test {
+	    	(PlayerWME)	
+	    	(PlayerUnitWME)	 
+	    	(MineralWME)	
+	    	(GeyserWME)	
+		}) wait;
+    
+   		mental_act {
+   			Logger.print("ABL", "Starting managers");
+   			UnitQueryWME oracle = new UnitQueryWME(); 
+   			BehavingEntity.getBehavingEntity().addWME(oracle);
+   			TimerWME timer = new TimerWME();
+   			BehavingEntity.getBehavingEntity().addWME(timer);
+   		}
+
+		subgoal startupAgent();
+		
+		with (persistent) subgoal WaitFrames(120);
+	}  
+
+	parallel behavior startupAgent() {
+		spawngoal startStrategyManager();
+		spawngoal startConstructionManager();
+		spawngoal startWorkerManager();
+		spawngoal startTacticsManager();
+		spawngoal startProductionManager();
+		spawngoal startScoutingManager();
+		spawngoal keyPressListener(); 
+		spawngoal startCBRManager(); 
+		spawngoal startSupplyManager(); 
+		spawngoal startBuildOrderManager(); 
+	}
+	 
+/******************************************************************************
+ * Strategy Manager
+ *****************************************************************************/
+
+    parallel behavior startStrategyManager() {  
+ 
+	  	with (ignore_failure) subgoal researchPsiStorm();
+	  	with (ignore_failure) subgoal researchLegSpeeed();
+	  	with (ignore_failure) subgoal researchDragoonRange();
+	  	with (ignore_failure) subgoal researchCarrierCapacity();
+	  	with (ignore_failure) subgoal researchObserverRange();
+	  	with (ignore_failure) subgoal forceObservers(); 
+	  	with (ignore_failure) subgoal forceExpansion(); 
+	  	 
+	  	with (persistent, priority 1) subgoal forceBuildRobo(); 
+	  	with (persistent, priority 1) subgoal forceBuildObservatory(); 
+	  	with (persistent, priority 1) subgoal forceBuildObservers(); 
+	  	 
+	  	with (persistent) subgoal spendExcess(); 
+    } 
+      
+	/**  
+	 * Force production of a nexus. 
+	 */
+    sequential behavior forceExpansion() { 
+		with (success_test {
+			recon = (ReconWME) 
+			(recon.getNumNexus() == 1) 
+			!(NexusWME active==false) 
+			(PlayerWME supplyUsed>=100) 
+			!(ConstructionWME type==Protoss_Nexus)  
+		}) wait;
+		 
+		mental_act { 
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Nexus));
+		}
+		
+   		subgoal WaitFrames(24);   				
+    }
+     
+    sequential behavior spendExcess() {
+    	int minerals, gas;  
+    	   
+		with (success_test { 
+//			!(BuildSequenceWME) Not sure if this should be enforced for long builds 
+			(PlayerWME minerals::minerals gas::gas supplyUsed<380 supplyTotal::supplyTotal supplyUsed::supplyUsed) 
+			(supplyUsed + 4 < supplyTotal)  
+			(minerals > 600 || gas > 600) 
+		}) wait;	 
+		 
+		with (ignore_failure) subgoal spendExcess(minerals, gas); 			 
+		subgoal WaitFrames(24); 	 		
+	}       
+
+    sequential behavior spendExcess() {
+    	int minerals, gas;  
+    	   
+		with (success_test { 
+			!(BuildSequenceWME)
+			(PlayerWME minerals::minerals gas::gas supplyUsed<380 supplyTotal::supplyTotal supplyUsed::supplyUsed) 
+			(supplyUsed + 4 < supplyTotal)  
+			(minerals > 600 || gas > 600) 
+		}) wait;	 
+		 
+		with (ignore_failure) subgoal spendExcess(minerals, gas); 			 
+		subgoal WaitFrames(24); 	 		
+	}       
+	   
+	// spend excess on forge upgrades
+    sequential behavior spendExcess(int minerals, int gas) {  
+		precondition {
+			!(ForgeUpgradeDelayWME)   
+			(minerals>=300 && gas>=300)  
+			(ForgeWME ID::unitID active==true researchTimer==0)
+			(Logger.print("ABL", "Excess spending on forge upgrades"))
+		}     
+		
+		specificity 6;     
+		  
+		with (ignore_failure) act upgrade(unitID, Protoss_Ground_Weapons);
+		with (ignore_failure) act upgrade(unitID, Protoss_Armor);
+		with (ignore_failure) act upgrade(unitID, Protoss_Plasma_Shields);
+ 		 
+		mental_act {  
+			BehavingEntity.getBehavingEntity().addWME(new ForgeUpgradeDelayWME());
+		}
+		  
+		spawngoal deleteForgeUpgradeDelay();
+    }
+
+   	sequential behavior deleteForgeUpgradeDelay() { 
+		precondition {
+			delayWME = (ForgeUpgradeDelayWME) 
+		}
+ 
+		subgoal WaitFrames(240); 	 		 
+		mental_act {  
+			BehavingEntity.getBehavingEntity().deleteWME(delayWME);
+		}
+	}    
+	  
+	// excess spending: build more gateways
+    sequential behavior spendExcess(int minerals, int gas) { 
+		precondition {
+			(minerals>=600) 
+			!(GatewayWME active==true trainTimer==0 buildTimer==0)
+			!(GatewayWME active==false) 
+			!(ConstructionWME type==Protoss_Gateway)
+			(Logger.print("ABL", "Adding more production facilities"))
+		}    
+		
+		specificity 5;   
+		 
+		mental_act { 
+			BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Gateway));
+		}
+    }
+
+
+	// excess spending: build more templars
+    sequential behavior spendExcess(int minerals, int gas) { 
+		precondition { 
+			(minerals>=300 && gas>=600) 
+			(PlayerWME supplyUsed::used supplyTotal::total)
+			(used < total) 
+			(ArchivesWME)
+			(GatewayWME ID::unitID active==true trainTimer==0 buildTimer==0)
+			(Logger.print("ABL", "Excess spending on High Templar"))
+		}    
+		
+		specificity 4;
+	 
+		act train(unitID, Protoss_High_Templar);	
+    }          
+
+        
+	// excess spending: build more dragoons
+    sequential behavior spendExcess(int minerals, int gas) { 
+		precondition {
+			(minerals>=600 && gas>=300)  
+			(PlayerWME supplyUsed::used supplyTotal::total)
+			(used < total)
+			(CyberneticsCoreWME)
+			(GatewayWME ID::unitID active==true trainTimer==0 buildTimer==0)
+			(Logger.print("ABL", "Excess spending on Dragoons"))
+		}    
+		
+		specificity 3;
+	
+		act train(unitID, Protoss_Dragoon);	
+    }           
+
+	// excess spending: build more zealots
+    sequential behavior spendExcess(int minerals, int gas) {  
+		precondition {
+			(minerals>=600) 
+			(PlayerWME supplyUsed::used supplyTotal::total)
+			(used < total)
+			(GatewayWME ID::unitID active==true trainTimer==0 buildTimer==0)
+			(Logger.print("ABL", "Excess spending on Zealots"))
+		}    
+		
+		specificity 2;
+	 
+		act train(unitID, Protoss_Zealot);	
+    }          
+     
+    /**  
+     * Force Psi storm to be researched. 
+     */
+    sequential behavior researchPsiStorm() { 
+		int unitID;
+		PlayerWME player;
+	   
+		with (success_test {
+			!(BuildSequenceWME)
+			(ArchivesWME active==true)
+			player = (PlayerWME)
+			(Logger.print("ABL", "Locking resources for Psi Storm Upgrade"))
+		}) wait;	
+		 
+		mental_act {
+			player.addResourceHold(200, 200);		
+		}
+   
+		with (success_test {
+        	(PlayerWME actualMinerals>=200 actualGas>=200)
+			(ArchivesWME ID::unitID active==true researchTimer==0)
+			(Logger.print("ABL", "Frcing Psi Storm Upgrade"))
+		}) wait;			
+		
+		with (ignore_failure) act research(unitID, Psionic_Storm); 
+		subgoal WaitFrames(6);	
+		with (ignore_failure) act research(unitID, Psionic_Storm);  // spam it just in case 
+		subgoal WaitFrames(6);	
+		with (ignore_failure) act research(unitID, Psionic_Storm); 
+
+		mental_act {
+			player.removeResourceHold(200, 200);		
+		}
+		
+		subgoal WaitFrames(7200);	// wait 5 minutes
+		subgoal researchTemplarEnergy(); 		
+	}
+	 
+	sequential behavior researchTemplarEnergy() {
+		int unitID;  
+		  
+		with (success_test {    
+        	(PlayerWME minerals>=150 gas>=150)  
+			(ArchivesWME ID::unitID active==true researchTimer==0)
+			(Logger.print("ABL", "Forcing templar energy"))
+		}) wait;			  
+		      
+		with (ignore_failure) act upgrade(unitID, Khaydarin_Amulet);  
+    }
+    
+	/** 
+	 * Force leg speed to be researched. 
+	 */
+    sequential behavior researchLegSpeeed() {
+		int unitID;
+	  
+		with (success_test {
+			!(BuildSequenceWME)
+			(ReconWME zealotCount>=10) 
+			(CitadelWME ID::unitID active==true researchTimer==0)
+        	(PlayerWME minerals>=150 gas>=150)
+			(Logger.print("ABL", "Forcing Leg Speed Upgrade"))
+		}) wait;			 
+		 
+		with (ignore_failure) act upgrade(unitID, Leg_Enhancements); 
+	}
+	 
+    sequential behavior researchDragoonRange() {
+		int unitID; 
+	      
+		with (success_test {
+			!(BuildSequenceWME)
+			(ReconWME dragoonCount>=8)  
+        	(PlayerWME minerals>=150 gas>=150)
+			(CyberneticsCoreWME ID::unitID active==true researchTimer==0)
+			(Logger.print("ABL", "Forcing Dragoon range Upgrade"))
+		}) wait;			 
+		  
+		with (ignore_failure) act upgrade(unitID, Singularity_Charge); 
+    }  
+    
+    sequential behavior researchCarrierCapacity() {
+		int unitID; 
+	    
+		with (success_test { 
+			(CarrierWME)   
+			(FleetBeaconWME ID::unitID active==true researchTimer==0)
+        	(PlayerWME minerals>=100 gas>=100)
+			(Logger.print("ABL", "Forcing carrier capacity Upgrade"))
+		}) wait;			 
+		  
+		with (ignore_failure) act upgrade(unitID, Carrier_Capacity);  
+    }  
+	  	
+    sequential behavior researchObserverRange() {
+		int unitID; 
+	      
+		with (success_test { 
+			!(BuildSequenceWME) 
+			(TimerWME frameCount > 20000)
+			(ReconWME obsCount>=2)  
+			(ObservatoryWME ID::unitID active==true researchTimer==0) 
+        	(PlayerWME minerals>=150 gas>=150)
+			(Logger.print("ABL", "Forcing obs range Upgrade"))
+		}) wait;			  
+		   
+		with (ignore_failure) act upgrade(unitID, Sensor_Array);  
+ 
+		subgoal WaitFrames(7200);	// wait 5 minutes
+		subgoal researchObserverSpeed(); 
+    } 
+
+    sequential behavior researchObserverSpeed() { 
+		int unitID; 
+		
+		with (success_test {  
+        	(PlayerWME minerals>=200 gas>=200)
+			(ObservatoryWME ID::unitID active==true researchTimer==0)
+			(Logger.print("ABL", "Forcing obs range speed"))
+		}) wait;			  
+		    
+		with (ignore_failure) act upgrade(unitID, Gravitic_Boosters);  
+    }
+   	   
+    sequential behavior forceObservers() { 
+
+		with (success_test {
+        	(ReconWME enemyCloaking==true) 
+			(Logger.print("ABL", "Forcing Observer tech"))
+		}) wait;	
+		 
+		mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new ForceObserversWME()); 
+		}
+	}
+ 
+    sequential behavior forceBuildRobo() {
+
+		with (success_test {
+			(ForceObserversWME)
+			(CyberneticsCoreWME active==true)
+			(TimerWME frameCount > 6000)
+			!(RoboticsFacilityWME) 
+        	!(ConstructionWME type==Protoss_Robotics_Facility)
+			(Logger.print("ABL", "Forcing Robotics Facility construction"))
+		}) wait;	
+ 		 
+		mental_act {
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Robotics_Facility));
+		}
+		
+		subgoal WaitFrames(48); 	 		
+	}
+  
+    sequential behavior forceBuildObservatory() {
+
+		with (success_test {
+			(ForceObserversWME) 
+			(RoboticsFacilityWME active==true)
+			!(ObservatoryWME)
+        	!(ConstructionWME type==Protoss_Observatory)
+			(Logger.print("ABL", "Forcing Observatory"))
+		}) wait;	
+ 		 
+		mental_act {
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Observatory));
+		}
+		
+		subgoal WaitFrames(48); 	 		
+	}
+
+    sequential behavior forceBuildObservers() { 
+  
+		with (success_test {
+        	!(UnitRequestWME type==Protoss_Observer)
+			(ForceObserversWME) 
+			(PlayerWME supplyUsed<380)
+			(ObservatoryWME active==true) 
+			(ReconWME numObs<2)
+        	!(TrainUnitWME type==Protoss_Observer)
+			(Logger.print("ABL", "Forcing Observer"))
+		}) wait;	
+  		  
+		mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new TrainUnitWME(Protoss_Observer));
+		}
+		
+		subgoal WaitFrames(48); 	 		
+	}
+
+
+/******************************************************************************
+ * Scouting Manager
+ *****************************************************************************/
+
+    parallel behavior startScoutingManager() { 
+	  	with (persistent) subgoal pickScout();
+	  	with (persistent) subgoal scoutFlee();
+    }
+     
+    sequential behavior pickScout() {
+	    ProbeWME worker;
+	    ReconWME recon;
+	    int workerID;
+
+		subgoal WaitFrames(240);	// dont scout for another 2 minutes 
+  	    
+		with (success_test {
+//			(GatewayWME)
+			recon = (ReconWME) 
+			(recon.startScouting()) 
+			!(ParticleWME typeID!=Zerg_Overlord typeID!=Zerg_Drone typeID!=Protoss_Probe typeID!=Terran_SCV)
+        	worker = (ProbeWME active==true task==WORKER_MINE ID::workerID carryingMinerals==false)
+        	(Logger.print("ABL", "Picked worker"))
+		}) wait;	
+	
+		// claim for scouting
+		mental_act {
+			worker.setTask(WORKER_SCOUT);
+			worker.setPreviousHealth();
+		}  
+ 		 
+		with (persistent when_succeeds) subgoal workerScout(worker, workerID);						 
+	}    
+	
+	/**
+	 * Scout known enemy locations.
+	 */	
+    sequential behavior workerScout(ProbeWME worker, int workerID) {
+    	precondition {
+        	particle = (ParticleWME typeID!=Zerg_Overlord typeID!=Zerg_Drone typeID!=Protoss_Probe typeID!=Terran_SCV)
+        	(Logger.print("ABL", "Particle scouting"))
+    	}
+		specificity 2;
+    	  
+		context_condition {	
+			(ProbeWME ID==workerID)	// force a sensor update
+        	(worker.getHitPoints() > 0)    
+		}
+		
+		int x, y;		
+		boolean foundParticle = true;
+		
+		mental_act {
+        	particle = ABLStarCraftBot.getGame().getParticleFilter().getRandomBuildingParticle();
+        	
+        	if (particle != null) {
+				x = particle.getX() - 10 + (int)(Math.random()*20); 
+				y = particle.getY() - 10 + (int)(Math.random()*20); 
+			}
+			else { 
+				foundParticle = false;
+				x = worker.getX();
+				y = worker.getY();
+			}		
+		}      
+ 
+		// is there anything to scout?
+		subgoal continueBehavior(foundParticle);
+		
+		act rightClickTile(workerID, x, y);
+		subgoal WaitFrames(48);
+		
+		with (success_test { 
+        	(ProbeWME ID==workerID order==PlayerGuard)
+		}) wait;	
+	}	 
+	
+
+	/**
+	 * Scout for bases.
+	 */	
+    sequential behavior workerScout(ProbeWME worker, int workerID) {
+    	precondition { 
+        	map = (MapWME)
+        	timer = (TimerWME)
+    	}
+		specificity 1;
+    	
+		context_condition {	
+			(ProbeWME ID==workerID)	// force a sensor update
+        	(worker.getHitPoints() > 0)    
+		}
+	
+		int x, y;		
+		Point point;
+		
+		mental_act {
+			if (timer.getFrameCount() > 12000) {	// scout everywhere after 12 minutes
+				point = map.getNextScoutLocation();			
+			}		
+			else {
+				point = map.getNextStartLocation();
+			}
+
+			x = point.x; 
+			y = point.y;
+        	Logger.print("ABL", "scouting " + x + " " + y);
+		}    
+		 
+		act rightClickTile(workerID, x, y);
+		subgoal WaitFrames(2);
+
+		with (success_test {
+        	(ProbeWME ID==workerID order==PlayerGuard)
+		}) wait;	 
+    }
+ 
+    sequential behavior scoutFlee() {
+//		specificity 3; 
+		
+	    ProbeWME worker;
+	    int x, y, workerID, target, orderTarget, targetX, targetY;
+	    
+		with (success_test {
+        	worker = (ProbeWME task==WORKER_SCOUT takenDamage==true ID::workerID targetX::targetX targetY::targetY)        	
+//        	worker = (ProbeWME task==WORKER_SCOUT ID::workerID targetX::targetX targetY::targetY)        	
+//			(EnemyUnitWME target::target orderTarget::orderTarget)
+//			(target==workerID || orderTarget==workerID) 
+        	(NexusWME x::x y::y)
+        	(Logger.print("ABL", "Scout fleeing"))
+		}) wait;	
+		 
+		act rightClickTile(workerID, x, y);
+		subgoal WaitFrames(150);		 
+
+		mental_act {
+			worker.setPreviousHealth();
+		}		
+		 
+		act rightClickTile(workerID, targetX, targetY);
+		subgoal WaitFrames(2);		
+	}
+ 
+/******************************************************************************
+ * Supply Manager
+ *****************************************************************************/
+
+    parallel behavior startSupplyManager() {
+   		mental_act {
+   			Logger.print("SupplyManager", "Starting supply manager");
+   		}
+
+	  	with (persistent) subgoal preventSupplyLock();
+	  	with (persistent) subgoal preventStalledSupply();
+    }     
+    
+	// Build a farm if the supply used if close to the supply provided
+    sequential behavior preventSupplyLock() {
+		int race, supplyUsed;
+
+		with (success_test {
+        	!(ConstructionWME type==Protoss_Pylon)  
+        	!(PylonWME active==false)  
+        	(PlayerWME supplyUsed::supplyUsed supplyTotal::supplyTotal raceID::race supplyTotal<400) 
+			(((supplyTotal < 66) && (supplyUsed >= 42)) || ((supplyTotal >= 66) && (supplyUsed >= 0.8*supplyTotal)))   
+		}) wait; 
+
+   		mental_act {
+   			Logger.print("SupplyManager", "Requesting to build a pylon: " + supplyUsed);
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Pylon));
+	        
+	        if (supplyUsed > 120) {
+		        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Pylon)); 
+		    }
+		    
+	        if (supplyUsed > 240) {
+		        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Pylon)); 
+		    }
+   		} 
+   		   
+   		subgoal WaitFrames(48); 
+    }    
+
+	// can happen if a supply lock occurs early in the game, e.g. 5 pool   
+    sequential behavior preventStalledSupply() {
+		int race, supplyUsed, supplyTotal;
+
+		with (success_test { 
+        	!(ConstructionWME type==Protoss_Pylon)  
+        	!(PylonWME active==false)   
+        	(PlayerWME minerals>=250 supplyUsed::supplyUsed supplyTotal::supplyTotal)   
+        	(supplyUsed + 4 > supplyTotal) 
+		}) wait;
+ 
+   		mental_act {
+   			Logger.print("SupplyManager", "Requesting to build a pylon due to supply stall");
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Pylon));
+   		} 
+   		  
+   		subgoal WaitFrames(48); 
+    }    
+ 
+/******************************************************************************
+ * Build Order Manager
+ *****************************************************************************/
+  
+    sequential behavior startBuildOrderManager() {
+   		mental_act {
+   			Logger.print("ABL", "Starting Build Order manager"); 
+  
+			// select a build order    
+			BuildSequenceWME sequence = BuildSelector.selectBuild();
+//			BuildSequenceWME sequence = new BuildScriptWME(System.getProperty("BuildOrderScript"));
+//			BuildSequenceWME sequence = new BuildScriptWME("src/eisbot/buildorder/buildorders/10-15gate.txt"); 
+
+			offsetPylons = sequence.isFastExpand();			 
+	        BehavingEntity.getBehavingEntity().addWME(sequence );
+   		} 
+    
+	  	with (persistent) subgoal getNextBuildStep(); 
+	}   
+   
+    sequential behavior getNextBuildStep() {
+    	BuildSequenceWME buildOrder;
+    	RequestWME request;   
+    	int supplyUsed, supplyReq;
+    	int minsReq, gasReq, mins, gas;
+ 
+		mental_act {   
+   			Logger.print("ABL", "Waiting for BO requests to be processed");
+		} 
+ 
+		// wait for a request
+        with (success_test { 
+        	!(UnitRequestWME)
+        	!(ResearchRequestWME) 
+        	!(BuildingRequestWME) 
+        	!(TrainUnitWME)
+        	!(ConstructionWME) 
+        	!(ArchonRequestWME) 
+        	buildOrder = (BuildSequenceWME supplyReq::supplyReq mineralReq::minsReq gasReq::gasReq) 
+         	(PlayerWME supplyUsed::supplyUsed minerals::mins gas::gas) 
+         	(supplyUsed>=(2*supplyReq) || supplyUsed >= maxSupplyReq || (mins >= (minsReq + 50) && gas>=gasReq))
+		}) wait; 
+ 		 
+		mental_act {  
+			request = buildOrder.getRequestWME();
+   			Logger.print("ABL", "New Build Order request: " + request);
+
+			if (request != null) {
+				ABLStarCraftBot.getGame().processedBuildRequest(request);
+			}
+		} 
+
+		subgoal processBuildStep(request);		 
+		
+		// move on to the next build order request
+		mental_act { 
+			buildOrder.getNextStep();
+		}		
+	}	
+    
+    sequential behavior processBuildStep(RequestWME request) {
+    	precondition {
+    		(request!=null)
+    	}
+   
+   		mental_act {
+	        BehavingEntity.getBehavingEntity().addWME(request);
+   		}
+    }
+
+    sequential behavior processBuildStep(RequestWME request) {
+    	precondition {
+    		(request==null)
+        	buildOrder = (BuildSequenceWME)
+    	}
+
+   		mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(buildOrder);	        
+   			Logger.print("ABL", "Build order completed");
+
+			// enable the cbr component for build order			
+			waitForPrereqs = false;
+			BehavingEntity.getBehavingEntity().addWME(new EnableCBRWME());	        
+		} 
+		    	
+    	wait;
+    } 
+         
+/******************************************************************************
+ * CBR Manager
+ *****************************************************************************/
+
+    parallel behavior startCBRManager() {
+   		mental_act {
+   			Logger.print("CBR", "Starting CBR manager");
+   		}
+   		 
+	  	with (persistent) subgoal processUnitRequests();
+	  	with (persistent) subgoal processBuildingRequests();
+	  	with (persistent) subgoal processResearchRequests();
+	  	with (persistent) subgoal processArchonRequests();
+    }     
+
+	/**
+	 * Processing UnitRequestWME objects
+	 */
+    sequential behavior processUnitRequests() {
+		UnitRequestWME request;   
+		int typeID;
+		int whatBuilds;
+		int req1;
+		int req2;		
+		int supplyRequired, supplyUsed;
+ 
+		// wait for a request
+        with (success_test {
+        	request = (UnitRequestWME type::typeID producedAtType::whatBuilds req1::req1 req2::req2 supplyRequired::supplyRequired)
+        	(PlayerWME supplyUsed::supplyUsed)
+        	((supplyUsed + supplyRequired) <= 400) 
+   			(Logger.print("CBR", "Processing unit request: " + typeID))
+		}) wait;
+		    		
+   		// handle the request
+		with (ignore_failure) subgoal handleUnitRequest(typeID, whatBuilds, req1, req2);   		 
+		with (ignore_failure) subgoal handlePrereqs(req1, req2);   		 
+		
+		subgoal WaitFrames(6);
+ 		
+		// delete the request
+    	mental_act {    		
+			BehavingEntity.getBehavingEntity().deleteWME(request);	        
+   		}
+   	} 
+
+    sequential behavior handlePrereqs(int req1, int req2) {
+        precondition {
+        	(waitForPrereqs==false)
+        	recon = (ReconWME)
+        }
+         
+        mental_act {
+        	Logger.print("ABL", "Adding Construction WME for unit prereqs");
+	        recon.addPrereqsToWM(req1, req2);
+		}
+	}
+	 
+	/**
+	 * Unit has no additional requirements.
+	 */   	
+    sequential behavior handleUnitRequest(int typeID, int whatBuilds, int req1, int req2) {
+        precondition {
+        	(waitForPrereqs==false)
+        	(req1==NULL_UNIT && req2==NULL_UNIT)
+        	(PlayerUnitWME typeID==whatBuilds active==true)  
+        }
+ 
+	 	// wait until there is not a request
+        with (success_test {
+        	!(TrainUnitWME)
+		}) wait;
+
+		// create the unit request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new TrainUnitWME(typeID));
+   		}
+	}
+
+	/**
+	 * Same as above but waits for prereqs.
+	 */
+    sequential behavior handleUnitRequest(int typeID, int whatBuilds, int req1, int req2) {
+        precondition {
+        	(waitForPrereqs==true)
+        	(req1==NULL_UNIT && req2==NULL_UNIT)
+        }
+
+	 	// wait until there is not a request
+        with (success_test {
+        	!(TrainUnitWME)
+        	(PlayerUnitWME typeID==whatBuilds active==true)  
+		}) wait;
+
+		// create the unit request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new TrainUnitWME(typeID));
+   		}
+	}
+	 
+	/**
+	 * Unit has a single additional requirement.
+	 */   	
+    sequential behavior handleUnitRequest(int typeID, int whatBuilds, int req1, int req2) {
+        precondition {
+        	(waitForPrereqs==false)        
+        	(req1!=NULL_UNIT && req2==NULL_UNIT)
+        	(PlayerUnitWME typeID==whatBuilds active==true)  
+        	(PlayerUnitWME typeID==req1 active==true)  
+        }
+
+	 	// wait until there is not a request
+        with (success_test {
+        	!(TrainUnitWME)
+		}) wait;
+
+		// create the unit request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new TrainUnitWME(typeID));
+   		}
+	}
+
+	/**
+	 * Same as above but waits for prereqs.
+	 */
+    sequential behavior handleUnitRequest(int typeID, int whatBuilds, int req1, int req2) {
+        precondition {
+        	(waitForPrereqs==true)
+        	(req1!=NULL_UNIT && req2==NULL_UNIT)
+        }
+
+	 	// wait until there is not a request
+        with (success_test {
+        	!(TrainUnitWME)
+        	(PlayerUnitWME typeID==whatBuilds active==true)  
+        	(PlayerUnitWME typeID==req1 active==true)  
+		}) wait;
+
+		// create the unit request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new TrainUnitWME(typeID));
+   		}
+	} 
+
+	/**
+	 * Unit has two additional requirements.
+	 */   	
+    sequential behavior handleUnitRequest(int typeID, int whatBuilds, int req1, int req2) {
+        precondition {
+        	(waitForPrereqs==false)
+        	(req1!=NULL_UNIT && req2!=NULL_UNIT)
+        	(PlayerUnitWME typeID==whatBuilds active==true)  
+        	(PlayerUnitWME typeID==req1 active==true)  
+        	(PlayerUnitWME typeID==req2 active==true)  
+        }
+
+	 	// wait until there is not a request
+        with (success_test {
+        	!(TrainUnitWME)
+		}) wait;
+
+		// create the unit request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new TrainUnitWME(typeID));
+   		}
+	}		
+
+	/**
+	 * Same as above but waits for prereqs.
+	 */
+    sequential behavior handleUnitRequest(int typeID, int whatBuilds, int req1, int req2) {
+        precondition {
+        	(waitForPrereqs==true)
+        	(req1!=NULL_UNIT && req2!=NULL_UNIT)
+        }
+
+	 	// wait until there is not a request
+        with (success_test {
+        	!(TrainUnitWME)
+        	(PlayerUnitWME typeID==whatBuilds active==true)  
+        	(PlayerUnitWME typeID==req1 active==true)   
+        	(PlayerUnitWME typeID==req2 active==true)  
+		}) wait; 
+
+		// create the unit request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new TrainUnitWME(typeID));
+   		}
+	}		
+ 
+	/** 
+	 * Process building requests 
+	 */
+    sequential behavior processBuildingRequests() {
+		BuildingRequestWME request;   
+		int type;
+		int firstUnitReq;
+		int secondUnitReq;
+
+        with (success_test {
+        	request = (BuildingRequestWME type::type unitReq::firstUnitReq secondUnitReq::secondUnitReq)
+        	!(ConstructionWME type==type)
+   			(Logger.print("ABL", "Processing building request: " + type))
+		}) wait;
+		   		
+		with (ignore_failure) subgoal handleBuildingRequest(type, firstUnitReq, secondUnitReq);
+		with (ignore_failure) subgoal handlePrereqs(firstUnitReq, secondUnitReq);   		 
+		subgoal WaitFrames(12);
+		
+    	mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(request);	        
+   		}
+   	} 
+
+	/**
+ 	 * Creates a construction request for a building with no pre-requisite buildings.
+	 */
+    sequential behavior handleBuildingRequest(int type, int unitReq, int secondUnitReq) {
+        precondition {
+        	(unitReq==NULL_UNIT)
+        }
+         
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(type));
+   		}
+	}
+        
+	/**
+ 	 * Creates a construction request for a building with a single pre-requisite building.
+	 */
+    sequential behavior handleBuildingRequest(int type, int unitReq, int secondUnitReq) {
+        precondition {
+        	(waitForPrereqs==false) 
+        	(unitReq!=NULL_UNIT && secondUnitReq==NULL_UNIT)
+        	(PlayerUnitWME typeID==unitReq active==true)          	
+        }
+         
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(type));
+   		}
+	}
+ 	   
+	/** 
+	 * Same as above but waits for prereqs.
+	 */
+    sequential behavior handleBuildingRequest(int type, int unitReq, int secondUnitReq) {
+        precondition {
+        	(waitForPrereqs==true) 
+        	(unitReq!=NULL_UNIT)
+        }
+        
+        // wait for prereqs
+        with (success_test {
+        	(PlayerUnitWME typeID==unitReq active==true)          	
+		}) wait;
+        
+        
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(type));
+   		}
+	}
+
+	/**
+ 	 * Creates a construction request for a building with a double pre-requisite building.
+	 */
+    sequential behavior handleBuildingRequest(int type, int unitReq, int secondUnitReq) {
+        precondition {
+        	(waitForPrereqs==false)
+        	(unitReq!=NULL_UNIT && secondUnitReq!=NULL_UNIT)
+        	(PlayerUnitWME typeID==unitReq active==true)          	
+        	(PlayerUnitWME typeID==secondUnitReq active==true)          	
+        }
+         
+    	mental_act {
+			BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(type));
+   		}
+	}
+
+	/** 
+	 * Processing ReseaechRequestWME objects
+	 */
+    sequential behavior processResearchRequests() {
+		ResearchRequestWME request;   
+		int type;
+		int whatResearches;
+		boolean isUpgrade;
+		int mineralsCost, gasCost;
+
+		// wait for a request
+        with (success_test {
+        	request = (ResearchRequestWME type::type isUpgrade::isUpgrade researchedAtType::whatResearches mineralsCost::mineralsCost gasCost::gasCost)
+   			(Logger.print("CBR", "Processed research request: " + type))
+		}) wait;
+ 
+		// handle the request
+		with (ignore_failure) subgoal handleResearchRequest(isUpgrade, type, whatResearches, mineralsCost, gasCost);
+		with (ignore_failure) subgoal handlePrereqs(whatResearches, -1);   		 
+		subgoal WaitFrames(12);
+		
+		// delete the request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(request);	        
+   		}
+   	}
+ 
+	/**
+	 * Researches an upgrade type.
+	 */
+    sequential behavior handleResearchRequest(boolean isUpgrade, int type, int whatResearches, int mineralsCost, int gasCost) {
+        precondition {
+        	(waitForPrereqs==false) 
+            (isUpgrade==true)
+        	unit = (PlayerUnitWME typeID==whatResearches ID::unitID active==true researchTimer==0)     
+        }    
+
+		// wait for the building to be idle
+        with (success_test {
+        	(PlayerWME minerals>=mineralsCost gas>=gasCost)
+   			(Logger.print("CBR", "Approved research request"))
+		}) wait;                
+                
+		// start the upgrade
+		act upgrade(unitID, type);
+    }
+  
+	/**
+	 * Same as above but waits for prereqs.
+	 */ 
+    sequential behavior handleResearchRequest(boolean isUpgrade, int type, int whatResearches, int mineralsCost, int gasCost) {
+        precondition {
+        	(waitForPrereqs==true) 
+            (isUpgrade==true)
+        }    
+ 
+		PlayerUnitWME unit;
+		int unitID; 
+ 
+		// wait for the building to be idle
+        with (success_test {
+        	(PlayerWME minerals>=mineralsCost gas>=gasCost)
+        	unit = (PlayerUnitWME typeID==whatResearches ID::unitID active==true)     
+        	(unit.getBuildTimer()==0 && unit.getResearchTimer()==0)     
+   			(Logger.print("CBR", "Approved research request"))
+		}) wait;                
+                 
+		// start the upgrade 
+		act upgrade(unitID, type);
+    }
+   
+	/**
+	 * Researches a tech type.
+	 */
+    sequential behavior handleResearchRequest(boolean isUpgrade, int type, int whatResearches, int mineralsCost, int gasCost) {
+        precondition {
+        	(waitForPrereqs==false) 
+            (isUpgrade==false)
+        	unit = (PlayerUnitWME typeID==whatResearches ID::unitID)     
+        }    
+ 
+		// wait for the building to be idle
+        with (success_test {
+        	(unit.getBuildTimer()==0 && unit.getResearchTimer()==0)     
+   			(Logger.print("CBR", "Approved research request"))
+		}) wait;                
+                
+        // start the research
+   		act research(unitID, type);
+    }   	
+     
+	/**
+	 * Same as above but waits for prereqs.
+	 */    
+    sequential behavior handleResearchRequest(boolean isUpgrade, int type, int whatResearches, int mineralsCost, int gasCost) {
+        precondition { 
+        	(waitForPrereqs==true)  
+            (isUpgrade==false)
+        }      
+ 
+		PlayerUnitWME unit;
+		int unitID;
+   
+		// wait for the building to be idle
+        with (success_test {
+        	(PlayerWME minerals>=mineralsCost gas>=gasCost)
+        	unit = (PlayerUnitWME typeID==whatResearches ID::unitID active==true)      
+        	(unit.getBuildTimer()==0 && unit.getResearchTimer()==0)     
+   			(Logger.print("CBR", "Approved research request"))
+		}) wait;                
+                
+        // start the research
+   		act research(unitID, type);
+    }   	
+
+	/**
+	 * Manages archon requests.
+	 */
+    sequential behavior processArchonRequests() {
+		ArchonRequestWME request;   
+
+		// wait for a request
+        with (success_test {
+        	request = (ArchonRequestWME)
+   			(Logger.print("CBR", "Got archon request")) 
+		}) wait;
+		    		
+   		// handle the request
+		with (ignore_failure) subgoal handleArchonRequest(request);   		 
+		subgoal WaitFrames(6);
+ 		
+		// delete the request
+    	mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(request);	        
+   		}
+   	}
+   
+    sequential behavior handleArchonRequest(ArchonRequestWME request) {
+        precondition { 
+        	(waitForPrereqs==false)  
+        	(request.isDark()==false)  
+        	templar1 = (HighTemplarWME active==true merged==false ID::ID1 x::x1 y::y1)
+        	templar2 = (HighTemplarWME active==true merged==false ID!=ID1 ID::ID2 x::x2 y::y2)        	 
+			(UnitWME.distance(x1, y1, x2, y2) < 20)  
+  			(Logger.print("CBR", "Warping Archon")) 
+        }      
+ 
+    	mental_act {
+			templar1.setMerged();	        
+			templar2.setMerged();	        
+   		}
+        
+        act useTechTarget(ID1, Archon_Warp, ID2);
+		subgoal WaitFrames(6);
+	}   
+ 
+    sequential behavior handleArchonRequest(ArchonRequestWME request) {
+        precondition { 
+        	(waitForPrereqs==true)  
+        	(request.isDark()==false)  
+        }      
+ 
+		// make sure they are at least in production         
+        context_condition {
+        	(HighTemplarWME ID::ID)
+        	(HighTemplarWME ID!=ID)        	  
+        } 
+         
+        HighTemplarWME templar1;
+        HighTemplarWME templar2;  
+        int ID1, ID2;
+          
+        with (success_test { 
+        	templar1 = (HighTemplarWME active==true merged==false ID::ID1 x::x1 y::y1) 
+        	templar2 = (HighTemplarWME active==true merged==false ID!=ID1 ID::ID2 x::x2 y::y2)        	
+			(UnitWME.distance(x1, y1, x2, y2) < 20)  
+   			(Logger.print("CBR", "Warping Archon")) 
+		}) wait;        
+
+    	mental_act {
+			templar1.setMerged();	        
+			templar2.setMerged();	        
+   		}
+        
+        act useTechTarget(ID1, Archon_Warp, ID2);
+		subgoal WaitFrames(6);
+	}  
+ 
+ 	// ignore dark archon requests 
+    sequential behavior handleArchonRequest(ArchonRequestWME request) {
+		subgoal WaitFrames(6);
+    }
+	
+/******************************************************************************
+ * Production Manager
+ *****************************************************************************/
+ 
+    parallel behavior startProductionManager() {
+	  	with (persistent, priority 2) subgoal produceObservers();
+	  	with (persistent) subgoal produceUnits();
+	  	with (persistent) subgoal produceUnitsNow();
+	  	with (persistent) subgoal limitQueueSize();
+    }
+
+	/**
+	 * Prevent buildings from queueing up multiple units. 
+	 */
+    sequential behavior limitQueueSize() {	
+		int unitID; 
+ 		
+        with (success_test {
+        	(UnitWME TrainingQueueSize>1 ID::unitID)
+		}) wait;  
+ 		  
+		subgoal WaitFrames(48); 
+		subgoal cancelTrain(unitID);
+	}
+   
+    sequential behavior cancelTrain(int unitID) {	
+    	precondition {
+        	(UnitWME ID==unitID TrainingQueueSize>1 )    	
+    	}
+     	 
+		mental_act {
+			System.err.println("Cancelling train unit");
+		}
+    	
+		act cancelTrain(unitID);
+		subgoal WaitFrames(24); 
+    }
+
+    // is there an obs request
+    sequential behavior produceObservers() {
+    	TrainUnitWME trainUnitWME;
+	    int unitID;
+ 	      
+        with (success_test {
+        	trainUnitWME = (TrainUnitWME type==Protoss_Observer)
+        	(PlayerWME minerals>=25 gas>=75 supplyUsed<400)
+        	(RoboticsFacilityWME ID::unitID trainTimer==0 buildTimer==0 active==true trainingQueueSize==0)
+        	!(ConstructionWME resourcesClaimed==false) 
+		}) wait;  
+   
+// 		act train(unitID, Protoss_Observer); 
+		subgoal trainUnit(unitID, Protoss_Observer); 
+		subgoal WaitFrames(120);
+  
+		mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(trainUnitWME);
+		}
+    }  
+    
+    // is there a unit request 
+    sequential behavior produceUnits() {
+    	TrainUnitWME trainUnitWME;
+	    int unitID, mins, gas, type, buildType, buildingID;
+    
+        with (success_test { 
+        	trainUnitWME = (TrainUnitWME mineralCost::mins gasCost::gas type::type whatBuilds::buildType builder::buildingID supplyCost::supplyCost)
+        	(PlayerWME minerals>=mins gas>=gas supplyUsed::supplyUsed) 
+        	((supplyCost + supplyUsed) <= 400)
+        	(PlayerUnitWME typeID==buildType ID::unitID trainTimer==0 buildTimer==0 active==true trainingQueueSize==0)
+        	(buildingID==-1 || buildingID==unitID)
+        	!(ConstructionWME resourcesClaimed==false)
+		}) wait;  
+
+//		act train(unitID, type);
+		subgoal trainUnit(unitID, type);
+		subgoal WaitFrames(24);
+ 
+		mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(trainUnitWME);
+		}
+    }  
+  
+    // is there a unit request (ignore construction if you have money)
+    sequential behavior produceUnitsNow() {
+    	TrainUnitWME trainUnitWME;
+	    int unitID, mins, gas, type, buildType, buildingID; 
+     
+        with (success_test { 
+        	trainUnitWME = (TrainUnitWME mineralCost::mins gasCost::gas type::type whatBuilds::buildType builder::buildingID supplyCost::supplyCost)
+        	(PlayerWME minerals>600 gas>=gas supplyUsed::supplyUsed) 
+        	((supplyCost + supplyUsed) <= 400)  
+        	(PlayerUnitWME typeID==buildType ID::unitID trainTimer==0 buildTimer==0 active==true trainingQueueSize==0) 
+        	(buildingID==-1 || buildingID==unitID) 
+		}) wait;  
+
+//		act train(unitID, type);
+		subgoal trainUnit(unitID, type);
+		subgoal WaitFrames(24);
+  
+		mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(trainUnitWME);
+		}
+    }  
+     
+    /**
+     * Filter out unit requests. 
+     */
+    sequential behavior trainUnit(int unitID, int type) {
+    	precondition {    
+			recon = (ReconWME)
+			(recon.isDuplicate(type)==true)
+		}
+		specificity 2;
+		
+		succeed_step; 
+    }
+ 
+    sequential behavior trainUnit(int unitID, int type) {
+		specificity 1;
+ 		 
+		act train(unitID, type);
+    }
+
+/******************************************************************************
+ * Worker Manager
+ *****************************************************************************/
+
+    parallel behavior startWorkerManager() {
+    	with (persistent) subgoal pumpProbesBuildOrder();
+    	with (persistent) subgoal pumpProbesExcess();
+    	with (persistent) subgoal pumpProbesCBR();
+    	with (persistent) subgoal additionalAssimilators();
+    
+		with (persistent) subgoal mineMinerals();
+		with (persistent) subgoal gasTransfer();  
+		with (persistent) subgoal checkMinedOut();
+		with (persistent) subgoal probeTransfer();
+		with (persistent) subgoal manageWorkerHarass();
+		with (persistent) subgoal manageBaseHarass();
+//		with (persistent) subgoal pullOffGas();
+		with (persistent) subgoal pullOffGasDefense();
+		with (persistent) subgoal putOnGas(); 
+		with (persistent) subgoal detectIdleGasWorkers();
+		with (persistent) subgoal detectIdleConstructors();
+		with (persistent) subgoal forceAssimilator();
+		with (persistent) subgoal clearMineralBlocks();
+    }        
+   
+	/**
+	 * Find idle gas workers. 
+	 */
+    sequential behavior detectIdleGasWorkers() {
+		ProbeWME worker;
+ 		 
+		with (success_test {
+			worker = (ProbeWME task==WORKER_GAS order==PlayerGuard)
+		}) wait;
+		 
+    	mental_act { 
+			worker.setTask(WORKER_IDLE); 					
+		}    	
+		
+        subgoal WaitFrames(24);
+    }
+
+	/**
+	 * Find idle constructors. (timeout)
+	 */ 
+    sequential behavior detectIdleConstructors() {
+		ProbeWME worker;
+ 		  
+		with (success_test { 
+			worker = (ProbeWME task==WORKER_CONSTRUCT order==PlayerGuard)
+		}) wait;
+		 
+    	mental_act { 
+			worker.setTask(WORKER_IDLE); 					
+		}    	
+		
+        subgoal WaitFrames(24);
+    }
+
+	/**
+	 * Clear mineral patches which block paths. 
+	 */
+    sequential behavior clearMineralBlocks() {
+		int workerID, mineralID; 
+		ProbeWME worker; 
+ 		      
+		with (success_test {
+			(PlayerWME supplyUsed>=100) 
+			(MineralWME resources==0 ID::mineralID)
+//			!(EnemyUnitWME) 
+			worker = (ProbeWME task==WORKER_MINE ID::workerID carryingMinerals==false)   
+		}) wait;
+			 
+   		mental_act {
+	   		worker.setTask(WORKER_CLEAR); 	
+   		}
+   		
+   		act rightClickUnit(workerID, mineralID);   		
+        subgoal WaitFrames(750);	// give the worker time to reach it 
+        
+        // wait for the mineral patch to disappear 
+        with (success_test { 
+			!(MineralWME resources==0 ID::mineralID)
+		}) wait;
+        
+   		mental_act {
+	   		worker.setTask(WORKER_IDLE);  	
+   		}
+    }
+	
+	/**
+	 * Force production of an assimilator. 
+	 */
+    sequential behavior forceAssimilator() { 
+		with (success_test {
+			!(AssimilatorWME) 
+			(PlayerWME supplyUsed>=40) 
+			!(ConstructionWME type==Protoss_Assimilator) 
+		}) wait;
+		
+		mental_act {
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Assimilator));
+		}
+		
+   		subgoal WaitFrames(24);   				
+    }
+  
+	/** 
+	 * Pump probes.
+	 *
+	 * Note: trains probes directly, does not create TrainUnitRequests
+	 */
+    sequential behavior pumpProbesBuildOrder() {
+    	int supplyReq, supplyUsed, supplyTotal, nexusID, nx, ny, mx, my;
+     
+		with (success_test {
+        	(BuildSequenceWME supplyReq::supplyReq)	// check for active build order requst 
+			(ReconWME numProbes<maxProbes)
+        	!(UnitRequestWME)
+        	!(ConstructionWME)				// dont let probes interrupt buildings
+        	!(TrainUnitWME)				// dont let probes interrupt build order units
+         	(PlayerWME minerals >=50 supplyUsed::supplyUsed supplyTotal::supplyTotal)  
+			(supplyUsed<supplyTotal)
+         	(supplyUsed<(2*supplyReq) || supplyReq>=maxSupplyReq)
+			(NexusWME numWorkers<workersPerNexus ID::nexusID x::nx y::ny trainTimer==0 buildTimer==0 active==true) 
+			(MineralWME x::mx y::my)								// check for active mineral patch (dont produce at mined out locations)
+			(Math.abs(nx - mx) < 10 && Math.abs(ny - my) < 10) 	
+//  			(Logger.print("ABL", "Pumping a probe " + supplyUsed + " " + supplyReq))
+		}) wait;
+
+		act train(nexusID, Protoss_Probe);
+        subgoal WaitFrames(24);
+    }    
+
+    sequential behavior pumpProbesExcess() {
+    	int supplyReq, supplyUsed, supplyTotal, nexusID, nx, ny, mx, my;
+     
+		with (success_test {
+        	(BuildSequenceWME supplyReq::supplyReq)	// check for active build order requst 
+			(ReconWME numProbes<maxProbes)
+         	(PlayerWME minerals >=250 supplyUsed::supplyUsed supplyTotal::supplyTotal)  
+			(supplyUsed<supplyTotal) 
+         	(supplyUsed<(2*supplyReq) || supplyReq>=maxSupplyReq)
+			(NexusWME numWorkers<workersPerNexus ID::nexusID x::nx y::ny trainTimer==0 buildTimer==0 active==true) 
+			(MineralWME x::mx y::my)								// check for active mineral patch (dont produce at mined out locations)
+			(Math.abs(nx - mx) < 10 && Math.abs(ny - my) < 10) 	
+		}) wait;
+
+		act train(nexusID, Protoss_Probe);
+        subgoal WaitFrames(24);
+    }    
+     
+    sequential behavior pumpProbesCBR() {
+    	int supplyReq, supplyUsed, supplyTotal, nexusID, nx, ny, mx, my;
+     
+		with (success_test { 
+        	!(BuildSequenceWME) 
+			(ReconWME numProbes<maxProbes)
+//        	!(ConstructionWME)				// dont let probes interrupt buildings
+//        	!(TrainUnitWME)				// dont let probes interrupt build order units
+         	(PlayerWME minerals >=50 supplyUsed::supplyUsed supplyTotal::supplyTotal)  
+			(supplyUsed<supplyTotal)
+			(NexusWME numWorkers<workersPerNexus ID::nexusID x::nx y::ny trainTimer==0 buildTimer==0 active==true) 
+			(MineralWME x::mx y::my)								// check for active mineral patch (dont produce at mined out locations)
+			(Math.abs(nx - mx) < 10 && Math.abs(ny - my) < 10) 	
+//  			(Logger.print("ABL", "Pumping a probe " + supplyUsed + " " + supplyReq))
+		}) wait;
+
+		act train(nexusID, Protoss_Probe);
+        subgoal WaitFrames(24);
+    }    
+
+    /** 
+     * Produce additional assimilators. 
+     */
+    sequential behavior additionalAssimilators() {
+    	int nx, ny, gx, gy;
+    
+		with (success_test {
+        	(AssimilatorWME) 
+        	!(ConstructionWME type==Protoss_Assimilator)
+        	(NexusWME numWorkers>=10 x::nx y::ny)
+        	(GeyserWME x::gx y::gy) 
+        	(Math.abs(nx - gx) < 10 && Math.abs(ny - gy) < 10)
+		}) wait;
+
+    	mental_act {
+   			Logger.print("WorkerManager", "Requesting to build an additional assimilator");
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Assimilator));
+   		}
+   		
+        subgoal WaitFrames(24);
+   	}
+
+	/**
+	 * Too much gas.
+	 */
+    sequential behavior pullOffGas() {
+	    AssimilatorWME assimilator;
+	    int gas, supplyUsed;
+	    
+		with (success_test {
+			(PlayerWME gas::gas supplyUsed::supplyUsed)
+			(ReconWME numAssimilators<=1)
+			(gas >= 300)	
+//			(gas >= 300 || supplyUsed<=20)	
+        	assimilator = (AssimilatorWME targetWorkers>=3)				
+			(Logger.print("ABL", "Pulling worker off gas"))
+		}) wait;
+		
+		mental_act {
+			assimilator.setTargetWorkers(1);		
+		}
+ 
+   		subgoal WaitFrames(2);		
+    }
+ 
+    sequential behavior pullOffGasDefense() {
+	    AssimilatorWME assimilator;
+	    int x, y, ex, ey;
+	    
+		with (success_test {
+        	assimilator = (AssimilatorWME targetWorkers>0 x::x y::y)				
+        	(ReconWME myNexusCount<=1)
+        	(EnemyUnitWME x::ex y::ey isWorker==false isFlyer==false)
+        	(Math.abs(ex - x) <= 8 && Math.abs(ey - y) <= 8) 
+			(Logger.print("ABL", "Pulling worker off gas for DEFENSE"))
+		}) wait;
+		
+		mental_act {
+			assimilator.setTargetWorkers(0);		
+	        BehavingEntity.getBehavingEntity().addWME(new GasHoldWME());	        
+		}
+
+		// prevent gas collection 
+   		subgoal WaitFrames(500);		
+		mental_act {
+			BehavingEntity.getBehavingEntity().deleteAllWMEClass("GasHoldWME");
+		}
+    }
+
+	/** 
+	 * Not enough gas.
+	 */
+    sequential behavior putOnGas() {
+	    AssimilatorWME assimilator;
+	    
+		with (success_test {
+			(PlayerWME gas <= 200 supplyUsed >= 20)	
+			!(GasHoldWME)
+        	assimilator = (AssimilatorWME targetWorkers<3)				
+			(Logger.print("ABL", "Putting worker on gas"))
+		}) wait;
+		
+		mental_act {
+			assimilator.setTargetWorkers(3);		
+		}
+
+   		subgoal WaitFrames(2);		
+    }
+     
+  	/**
+  	 * Deal with worker harassment. 
+  	 */
+    sequential behavior manageWorkerHarass() {
+    	int x, y, workerID, task, enemyX, enemyY, priorTarget;
+    	ProbeWME worker;
+    	int friends = 0;
+    	boolean enemyWorker;
+    	
+		with (success_test {
+			worker = (ProbeWME ID::workerID orderTarget::priorTarget task::task x::x y::y)
+			(task==WORKER_MINE) 
+			(EnemyUnitWME orderTarget==workerID x::enemyX y::enemyY isWorker::enemyWorker isFlyer==false) 
+			(ReconWME MyNexusCount<=1)
+			(Logger.print("ABL", "Dealing with harass"))
+		}) wait;
+		
+		mental_act {
+			worker.setTask(WORKER_DEFEND);					
+			
+			// has taken damage already
+			if (worker.getShields() <= 10) {
+			   friends = 1; 
+			}
+			
+			// being attacked by a military unit
+			if (!enemyWorker) {
+				friends = 5;
+			}
+		}
+	
+		spawngoal workerDefend(worker, workerID, enemyX, enemyY, priorTarget);		
+   		subgoal WaitFrames(2);		
+   		spawngoal getFriendHelp(x, y, enemyX, enemyY, friends);
+   		subgoal WaitFrames(48);		
+	}     
+
+    sequential behavior manageBaseHarass() {
+    	int x, y, buildingID, enemyX, enemyY;
+    	int friends = 1;
+    	 
+		with (success_test {
+			worker = (NexusWME x::x y::y ID::buildingID)
+			(EnemyUnitWME orderTarget==buildingID x::enemyX y::enemyY) 
+			(ReconWME MyNexusCount<=1)
+			(Logger.print("ABL", "Dealing with base harass"))
+		}) wait;
+  
+   		spawngoal getFriendHelp(x, y, enemyX, enemyY, friends);
+   		subgoal WaitFrames(120);		
+	}     
+
+  
+	/**
+	 * Get assistance from another worker.
+	 */
+    sequential behavior getFriendHelp(int allyX, int allyY, int enemyX, int enemyY, int friends) {
+    	precondition {  
+    		(Logger.print("ABL", "Looking for friends: " + friends))
+    		(friends > 0)
+			worker = (ProbeWME ID::workerID orderTarget::priorTarget task::task x::x y::y)
+			(task==WORKER_MINE)
+        	(Math.abs(allyX - x) <= 7 && Math.abs(allyY - y) <= 7) 
+    		(Logger.print("ABL", "Getting help from a friend: " + workerID))
+    	}
+    	specificity 2;
+
+    	mental_act {
+			worker.setTask(WORKER_DEFEND);					
+    		friends = friends - 1;
+		}    	
+		
+		spawngoal workerDefend(worker, workerID, enemyX, enemyY, priorTarget);		
+   		subgoal WaitFrames(2);		
+   		spawngoal getFriendHelp(allyX, allyY, enemyX, enemyY, friends);
+    }
+
+	/**
+	 * Enough workers are already supporting
+	 */ 
+    sequential behavior getFriendHelp(ProbeWME worker, int workerID, int enemyX, int enemyY, int friends) {
+    	specificity 1;
+    	succeed_step;
+    }
+    
+	 /** 
+	  * Handle harassment. 
+	  */  
+    sequential behavior workerDefend(ProbeWME worker, int workerID, int enemyX, int enemyY, int priorTarget) {
+
+   		act attackMoveTile(workerID, enemyX, enemyY);  
+   		subgoal WaitFrames(200);		
+		subgoal returnToWork(worker, workerID, priorTarget);   		
+   		subgoal WaitFrames(2);   				
+    } 
+
+	/**
+	 * Return to gas.
+	 */
+    sequential behavior returnToWork(ProbeWME worker, int workerID, int priorTarget) {
+    	precondition {
+    		assimilator = (AssimilatorWME ID::assimilatorID)
+			(assimilator.getIsAssigned(workerID))
+			(Logger.print("ABL", "Returning to gas"))
+    	}
+    	specificity 2;
+     	    	
+		act rightClickUnit(workerID, assimilatorID);   		
+   		subgoal WaitFrames(2);   				
+		
+		mental_act {
+			worker.setTask(WORKER_GAS);		
+		}
+    }
+
+	/**
+	 * Return to minerals.
+	 */
+    sequential behavior returnToWork(ProbeWME worker, int workerID, int priorTarget) {
+    	precondition {
+			(Logger.print("ABL", "Returning to minerals"))
+    	}    	
+    	specificity 1;    	    
+      		
+		act rightClickUnit(workerID, priorTarget);   		
+   		subgoal WaitFrames(2);   				
+		
+		mental_act {
+			worker.setTask(WORKER_MINE);		
+		}
+    }
+ 
+    /**
+     * Transfer probes to a new nexus when it is nearing completion.
+     */    
+    sequential behavior probeTransfer() {
+    	int nexusID, nexusX, nexusY;
+    	NexusWME nexus;
+    
+		with (success_test {
+        	nexus = (NexusWME active==false buildTimer<200 buildTimer>150 ID::nexusID x::nexusX y::nexusY)
+        	(Logger.print("ABL", "Trasferring workers"))
+		}) wait;
+		
+		with (ignore_failure) subgoal transferWorkers(nexus, nexusID, nexusX, nexusY, 5);
+		subgoal WaitFrames(100);
+	} 
+ 
+    /**
+     * Transfers probes to the specified nexus. 
+     */
+    sequential behavior transferWorkers(NexusWME nexus, int nexusID, int nexusX, int nexusY, int count) {
+    	precondition {
+    	    (count > 0)
+    		worker = (ProbeWME task==WORKER_MINE ID::unitID) 
+    		(worker.getNexus() != null && worker.getNexus().getID() != nexusID)
+        	minerals = (MineralWME ID::mineralID x::minX y::minY  timeSinceLastUse >= 1000)  
+        	(Math.abs(nexusX - minX) <= 10 && Math.abs(nexusY - minY) <= 10)
+    	}
+
+        mental_act {
+        	minerals.setAsUsed();
+			if (worker.getNexus() != null) {		
+				worker.getNexus().freeWorker(unitID);
+			}
+			
+        	nexus.addWorker(unitID);
+        	worker.setNexus(nexus);        	
+   			count--;
+        }
+
+   		act rightClickUnit(unitID, mineralID);   		
+		with (ignore_failure) subgoal transferWorkers(nexus, nexusID, nexusX, nexusY, count);
+    }
+ 
+    /**
+     * Tell idle workers to mine nearby patches.
+     */ 
+    sequential behavior mineMinerals() {
+    	int unitID, workerX, workerY;
+    	ProbeWME worker;
+    
+		with (success_test {
+        	worker = (ProbeWME task==WORKER_IDLE ID::unitID x::workerX y::workerY active==true)
+		}) wait;
+   		
+   		subgoal selectMinerals(worker, unitID, workerX, workerY);
+   		
+   		mental_act {
+   			worker.setTask(WORKER_MINE);
+   		}
+    }
+
+    /**
+     * Find nearby patches not recently selected.
+     */
+	sequential behavior selectMinerals(ProbeWME worker, int unitID, int workerX, int workerY) {
+		precondition {
+		    nexus = (NexusWME active==true x::x y::y)
+        	(Math.abs(workerX - x) <= 10 && Math.abs(workerY - y) <= 10)
+        	minerals = (MineralWME ID::mineralID x::minX y::minY  timeSinceLastUse >= 1000) 
+        	(Math.abs(x - minX) <= 10 && Math.abs(y - minY) <= 10)
+        }	
+        specificity 2;
+
+        mental_act {
+        	minerals.setAsUsed();
+        	nexus.addWorker(unitID);
+        	worker.setNexus(nexus);        	
+        }
+
+   		act rightClickUnit(unitID, mineralID);   		
+	}
+
+	/**
+	 * No nearby minerals, just go to a patch near one of the player's Nexusii 
+	 */
+	sequential behavior selectMinerals(ProbeWME worker, int unitID, int workerX, int workerY) {
+		precondition {
+		    nexus = (NexusWME x::x y::y)
+        	minerals = (MineralWME ID:: mineralID x::minX y::minY)
+        	(Math.abs(x - minX) <= 10 && Math.abs(y - minY) <= 10)
+        }
+        specificity 1;
+        
+        mental_act {
+        	minerals.setAsUsed();
+        	nexus.addWorker(unitID);
+        	worker.setNexus(nexus);        	
+        }
+        
+   		act rightClickUnit(unitID, mineralID);
+	}
+
+	/**
+	 * Continuously check for new assimilators.
+	 */
+    sequential behavior gasTransfer() {
+    	AssimilatorWME assimilator;
+    	int ID, x, y, numWorkers, targetWorkers;
+    	
+		with (success_test {	 
+        	assimilator = (AssimilatorWME active==true numWorkers::numWorkers targetWorkers::targetWorkers x::x y::y ID::ID)
+        	(numWorkers!=targetWorkers)
+		}) wait;
+		
+		with (ignore_failure) subgoal modifyGasCollectors(assimilator, ID, numWorkers, targetWorkers, x, y);		
+		subgoal WaitFrames(48);
+    }
+
+	/**
+	 * Add gas collectors (assume direct control)
+	 */
+	sequential behavior modifyGasCollectors(AssimilatorWME assimilator, int assimilatorID, int numWorkers, int targetWorkers, int x, int y) {
+		precondition {
+			(numWorkers < targetWorkers)
+			worker = (ProbeWME task==WORKER_MINE ID::unitID x::workerX y::workerY active==true carryingMinerals==false)
+			(!assimilator.getIsAssigned(unitID))
+        	(Math.abs(x - workerX) <= 10 && Math.abs(y - workerY) <= 10)
+		}
+		specificity 2;
+	
+   		mental_act {    	
+			if (worker.getNexus() != null) {		   			
+   				worker.getNexus().freeWorker(unitID);
+   			}
+   			
+   			worker.setTask(WORKER_GAS);
+   			assimilator.addWorker(unitID);		
+   		} 
+
+		act rightClickUnit(unitID, assimilatorID);
+	} 
+	
+	/**
+	 * Remove gas collectors.
+	 */
+	sequential behavior modifyGasCollectors(AssimilatorWME assimilator, int assimilatorID, int numWorkers, int targetWorkers, int x, int y) {
+		precondition {
+			(numWorkers > targetWorkers)
+			(ReconWME numNexus==1)
+			worker = (ProbeWME task==WORKER_GAS ID::unitID x::workerX y::workerY active==true order==MoveToGas)
+		}
+		specificity 2;
+		
+   		mental_act {    		
+   			assimilator.freeWorker(unitID);		
+   			worker.setTask(WORKER_IDLE);
+   		} 
+	}
+
+	/**
+	 * No free gas workers. (Currently in assimilator)
+	 */ 
+	sequential behavior modifyGasCollectors(AssimilatorWME assimilator, int assimilatorID, int numWorkers, int targetWorkers, int x, int y) {
+		specificity 1;
+		subgoal WaitFrames(24);
+	}
+	
+    /** 
+     * Set minded-out workers back to idle
+     */
+    sequential behavior checkMinedOut() {    
+	    ProbeWME worker;
+	    int unitID; 
+	    
+		with (success_test { 
+        	worker = (ProbeWME task==WORKER_MINE order==PlayerGuard ID::unitID)
+		}) wait;
+		
+		mental_act {    		
+			if (worker.getNexus() != null) {		
+	   			worker.getNexus().freeWorker(unitID);
+	   		}
+	   		
+   			worker.setTask(WORKER_IDLE);
+   		} 
+    }	
+
+	/**
+	 * Force all workers to collect minerals and stop collecting gas.
+	 *
+	 * Invoke via: spawngoal focusMinerals();
+	 */	
+   sequential behavior focusMinerals() {     
+		with (persistent when_succeeds) subgoal forceMinerals();
+    }
+    
+    /**
+     * Iterator for the force minerals behavior.
+     */
+    sequential behavior forceMinerals() {
+    	precondition {
+        	assimilator = (AssimilatorWME targetWorkers!=0)
+    	}
+    	
+    	mental_act {
+			assimilator.setTargetWorkers(0);    				
+    	}
+    }	
+
+	/**
+	 * Force maximum gas collection.
+	 *
+	 * Invoke via: spawngoal focusGas();
+	 */	
+   sequential behavior focusGas() {    
+		with (persistent when_succeeds) subgoal forceGas();
+    }
+    
+    /**
+     * Iterator for the focus gas behavior.
+     */
+    sequential behavior forceGas() {
+    	precondition {
+        	assimilator = (AssimilatorWME targetWorkers!=3)
+    	}
+    	
+    	mental_act {
+			assimilator.setTargetWorkers(3);    				
+    	}
+    }	
+     
+/******************************************************************************
+ * Construction Manager
+ *****************************************************************************/
+
+    parallel behavior startConstructionManager() {
+	  	with (persistent) subgoal waitForConstructionRequest();	  	
+    }
+   
+	/**
+	 * Wait for construction WMEs to process
+	 */ 
+    sequential behavior waitForConstructionRequest() {    
+		ConstructionWME construction;
+    	int timeDeadline;
+     
+		with (success_test {
+			construction = (ConstructionWME)
+			(TimerWME frameCount::timeDeadline)
+			(Logger.print("Construction", "Got new construction request: " + construction.getType()))
+		}) wait;
+		 
+		mental_act { 
+			timeDeadline = timeDeadline + 60*24;   // 60 second timeout
+		}
+		
+    	with (persistent when_fails) subgoal processConstructionWME(construction, timeDeadline);
+    	
+		mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(construction);				
+		}		
+    }
+    
+	/**
+	 * Filter out excessive nexus requests.
+	 */    
+    sequential behavior processConstructionWME(ConstructionWME construction, int timeDeadline) {
+		precondition {
+        	(construction.isNexus())
+        	(TimerWME frameCount<nextNexusRequest)
+		}    
+		specificity 5;
+		
+		succeed_step;  
+    }
+
+ 	sequential behavior delayNextNexus(ConstructionWME construction) {
+		precondition {
+        	(construction.isNexus())
+        	(TimerWME frameCount::frameCount)
+		}    
+		
+		mental_act {
+			nextNexusRequest = frameCount + 5*24*60;
+		}
+ 	}
+  
+	/**
+	 * Filter out duplicate tech structures.
+	 */    
+    sequential behavior processConstructionWME(ConstructionWME construction, int timeDeadline) {
+		precondition {
+			recon = (ReconWME)
+			(recon.isDuplicate(construction)==true)
+		}    
+		specificity 5;
+		
+		succeed_step; 
+    }
+  
+	/** 
+	 * Failed to build the construction requrest in time.
+	 */
+    sequential behavior processConstructionWME(ConstructionWME construction, int timeDeadline) {
+        precondition {
+        	(TimerWME frameCount>=timeDeadline)
+			(Logger.print("Construction", "Construction timed out: " + construction.getType()))
+		}    
+		specificity 3;
+ 
+		// re-try the request  
+		mental_act { 
+			BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(construction.getType()));				
+		}		 
+		 
+		with (ignore_failure) subgoal freeResources(construction);
+	}
+
+	/**   
+	 * Check if there is any thing to build
+	 */
+    sequential behavior processConstructionWME(ConstructionWME construction, int timeDeadline) { 
+        precondition {
+			(construction.getHasRequirements()) 
+        	(TimerWME frameCount<timeDeadline) 
+        	player =  (PlayerWME)
+			(Logger.print("Construction", "Approved construction request: " + construction.getType()))
+		}
+								
+		// check that the player has the necessary tech
+		// also check for construction timeout
+		context_condition {	
+			(ConstructionWME) 	// sensor update
+        	(construction.getHasRequirements()==true)    
+        	(TimerWME frameCount<timeDeadline)
+		} 
+		
+		int type; 
+		 
+		with (ignore_failure) subgoal delayNextNexus(construction);		 
+				
+		// wait for resources to become available
+		with (success_test {
+			(player.getMinerals() >= construction.getMineralCost() && player.getGas() >= construction.getGasCost())
+			(Logger.print("Construction", "Acquired resources for construction: " + construction.getType()))
+		}) wait;
+		
+		// put a lock on the resources
+		mental_act {
+			player.addResourceHold(construction.getMineralCost(), construction.getGasCost());		
+			construction.setResourcesClaimed();			
+			type = construction.getType();
+		} 
+		
+		// go construct it
+		subgoal selectConstructor(construction, type);
+	}	
+ 
+	/** 
+	 * Fail the construction if the player lacks necessary tech and free claimed resources.
+	 */
+    sequential behavior processConstructionWME(ConstructionWME construction) {
+        precondition {
+        	(construction.getHasRequirements()==false)    
+		}    
+		
+		with (ignore_failure) subgoal freeResources(construction);
+	}
+ 
+	/**
+	 * Select a worker unit.
+	 *
+	 * Note: Non-pylon case. Worker will build close to nearby pylons.
+	 */ 
+    sequential behavior selectConstructor(ConstructionWME construction, int type) {
+		precondition {
+			(type != Protoss_Pylon)
+			worker = (ProbeWME task==WORKER_MINE ID::unitID active==true carryingMinerals==false)
+			(Logger.print("ABL", "Picked (non-Pylon) worker unit: " + construction.getType()))
+		}
+		
+		subgoal assignConstructionWorker(construction, type, worker, unitID);
+	} 
+  
+	/**
+	 * Select a worker unit.
+	 *
+	 * Note: Pylon case. Picks a worker close to building location.
+	 */ 
+    sequential behavior selectConstructor(ConstructionWME construction, int type) {
+		precondition { 
+			(type == Protoss_Pylon) 
+	    	(MapWME pylonWorker::unitID) 	    	  
+			worker = (ProbeWME task==WORKER_MINE ID::unitID active==true carryingMinerals==false)
+			(Logger.print("ABL", "Picked (Pylon) worker unit: " + construction.getType()))
+		}
+		
+		subgoal assignConstructionWorker(construction, type, worker, unitID);
+	}
+
+	/** 
+	 * Monitors the construction worker. 
+	 */		
+    sequential behavior assignConstructionWorker(ConstructionWME construction, int type, ProbeWME worker, int unitID) {
+		context_condition {	  
+			(ProbeWME ID==unitID active==true)	// force a sensor update
+        	(worker.getHitPoints() > 0)    
+		}
+
+		// claim the worker unit
+		mental_act {
+			if (worker.getNexus() != null) {		
+			  	worker.getNexus().freeWorker(unitID);
+			}
+			 
+   			worker.setNexus(null);
+			worker.setTask(WORKER_CONSTRUCT);    
+		}  
+				
+		// attempt to construct until success, or a parent context condition fails
+		with (persistent when_fails) subgoal selectBuildSite(type, worker, unitID);
+
+		// free worker unit and resources
+		with (ignore_failure) subgoal freeResources(construction);
+
+		mental_act {
+			worker.setTask(WORKER_IDLE);    
+		}		 
+ 		  
+		spawngoal monitorTrappedWorkers(worker, unitID);	
+	}   
+  
+	/**  
+	 * Mark the worker as trapped if it cant move.  
+	 */
+    sequential behavior monitorTrappedWorkers(ProbeWME worker, int workerID) {
+  		int x, y, order;  
+   
+		subgoal WaitFrames(360);   
+		mental_act {
+			x = worker.getX();
+			y = worker.getY();
+			order = worker.getOrder(); 
+		}		 
+     
+       subgoal monitorTrapped(worker, workerID, x, y, order);	
+    }
+     
+    sequential behavior monitorTrapped(ProbeWME worker, int workerID, int x, int y, int order) {
+		context_condition {
+	   		(ProbeWME ID==workerID x==x y==y order==order)        // failure here is good 
+       }
+           
+       subgoal WaitFrames(360);  
+       
+       mental_act {  
+			worker.setTrapped(); 
+       }
+    } 
+	    
+	/** 
+	 * Construction has started
+	 */
+    sequential behavior selectBuildSite(int type, ProbeWME worker, int workerID) {
+		precondition {
+			event = (NewUnitWME type==type)
+			(Logger.print("Construction", "Construction now started: " + type))
+		}
+		specificity 3;
+ 
+		mental_act {
+			offsetPylons = false;
+			event.setPurpose(pylonPurpose);
+			BehavingEntity.getBehavingEntity().deleteWME(event);				
+		}				  
+	}	
+
+	/**
+	 * Select a build location and construct the strucutre.
+	 *
+	 * Note: a successful build action causes the context condition to fire. 
+	 */
+    sequential behavior selectBuildSite(int type, ProbeWME worker, int workerID) {
+        precondition {
+			!(NewUnitWME type==type)
+	    	map = (MapWME)  
+	    	(map.findBuildingLocation(type, worker.getID(), worker.getX(), worker.getY(), offsetPylons))
+	    	(MapWME buildingX::x buildingY::y purpose::purpose)
+			(Logger.print("Construction", "Picked location: " + worker.getX() + " " + worker.getY()))
+		}
+ 
+  		// make sure the building location is clear and timeout not met
+		context_condition {	
+			(MapWME)	// sensor update
+        	(map.isLocationClear(type, x, y, workerID)==true)    
+		} 
+		specificity 2; 
+		
+		mental_act {
+			pylonPurpose = purpose;
+		}
+
+		// make sure the location is explored
+		with (ignore_failure) act rightClickTile(workerID, x, y);       	
+  		subgoal WaitFrames(6);  		   
+		subgoal buildTile(workerID, x, y, type);      	
+  		subgoal WaitFrames(48);  		  
+  		fail_step;
+    }  
+ 
+    sequential behavior buildTile(int workerID, int x, int y, int type) {
+        precondition {
+			!(NewUnitWME type==type)
+			(Logger.print("Construction", "Performing build action: " + x + " " + y))
+			(Logger.print("ABL", "Performing build action: " + x + " " + y))
+		}
+
+		act buildTile(workerID, x, y, type);
+	}
+    
+    /**
+     * No remaining build spots.
+     */
+    sequential behavior selectBuildSite(int type, PlayerUnitWME worker, int workerID) {
+        precondition {
+			!(NewUnitWME type==type)
+            (type != Protoss_Pylon)
+        	!(ConstructionWME type==Protoss_Pylon)
+        	!(PylonWME active==false)
+	    	map = (MapWME)
+	    	(!map.findBuildingLocation(type, worker.getID(), worker.getX(), worker.getY()))
+		}
+		specificity 1;
+		
+		mental_act {
+			Logger.print("ABL", "No room, building more pylons");
+	        BehavingEntity.getBehavingEntity().addWME(new ConstructionWME(Protoss_Pylon));
+		}
+	}    
+
+	/**
+	 * Remove resources held if construction has failed/completed.
+	 */
+    sequential behavior freeResources(ConstructionWME construction) {
+        precondition {
+        	(construction.getResourcesClaimed()==true)    
+        	player =  (PlayerWME)
+		}    
+		
+		mental_act {
+			player.removeResourceHold(construction.getMineralCost(), construction.getGasCost());
+		}
+	}
+
+    
+/******************************************************************************
+ * Tactics Manager
+ *****************************************************************************/
+  
+    parallel behavior startTacticsManager() { 
+    	mental_act {
+			Logger.print("Tactics", "Starting tactics manager");
+		}
+  
+	  	with (persistent) subgoal createSquad();		   
+	  	with (persistent) subgoal deleteSquad();		   
+	  	with (persistent) subgoal squadSelectTarget();		  
+	  	with (persistent) subgoal squadRetreat();		   
+	  	with (persistent) subgoal squadMerge();		   
+	  	with (persistent) subgoal squadBreakup();		   
+	  	with (persistent) subgoal archonAssignSquad();		 
+	  	with (persistent) subgoal attackerAssignSquad();		 
+	  	with (persistent) subgoal airSquadAttack();		 
+	  	with (persistent) subgoal corsairSquadAttack();		 
+           
+ 	  	with (persistent) subgoal rallyUnits();		    
+	  	with (persistent) subgoal unblockChokes();		    
+ 
+		// scouting
+		with (persistent) subgoal scatterAttack();		 
+
+		// flee behaviors  
+	  	with (persistent) subgoal flee();		
+	  	with (persistent) subgoal fleeDamage();		
+   
+	  	with (persistent, priority 3) subgoal defendBaseGround();		
+	  	with (persistent, priority 3) subgoal defendBaseAir();		
+	  	with (persistent, priority 3) subgoal defendBaseCaster();		
+     
+		// observers  
+	  	with (persistent) subgoal observerSupport();		
+	  	with (persistent) subgoal observerFlee();		 
+	  	with (persistent) subgoal revealCloakedUnits();		
+	  	with (persistent) subgoal revealBurrowedUnits();		 
+
+		// caster management  
+	  	with (persistent) subgoal casterAssignSquad();		 
+	  	with (persistent) subgoal casterFollowSquad();		 
+	  	with (persistent) subgoal casterRetreat();		 
+	  	with (persistent) subgoal psiStorm();		 
+	  	with (persistent) subgoal mergeArchon();		 
+	  	
+	  	// sub-unit production
+	  	with (persistent) subgoal trainInterceptors();  
+    }  
+        
+    sequential behavior defendBaseGround() {
+        int ex, ey, nx, ny, unitID, frameCount;
+	    AttackUnitWME unit;
+  
+		with (success_test {    
+			(TimerWME frameCount::frameCount) 
+			unit = (AttackUnitWME ID::unitID order!=AttackMove order!=AttackUnit squadID==0 task!=FIGHTER_FLEE isFlyer==false lastMoved::lastMoved) 
+			(frameCount > (lastMoved + 150))
+ 			(EnemyUnitWME x::ex y::ey burrowed==false isFlyer==false)
+			(NexusWME x::nx y::ny)   
+			(Math.abs(ex - nx) < 24 && Math.abs(ey - ny) < 24)
+			(Logger.print("ABL", "Defending base: " + unitID)) 
+		}) wait;  
+
+		mental_act { 
+			unit.setLastMoved(frameCount);			
+		}
+   
+		act attackMoveTile(unitID, ex, ey);
+		subgoal WaitFrames(4);  
+	}     
+  
+    sequential behavior airSquadAttack() {
+     	int unitID, x, y, ex, ey; 
+     
+		with (success_test {    
+			(CasterUnitWME ID::unitID order==Follow squadID!=0 isFlyer==true typeID!=Protoss_Corsair x::x y::y)  
+			(EnemyUnitWME x::ex y::ey)    
+			(UnitWME.distance(x, y, ex, ey) < 10)     
+		}) wait; 
+    
+		act attackMoveTile(unitID, ex, ey);
+		subgoal WaitFrames(24);  
+	}
+
+    sequential behavior corsairSquadAttack() {
+     	int unitID, x, y, ex, ey, targetID; 
+      
+		with (success_test {     
+			(CorsairWME ID::unitID order==Follow squadID!=0 x::x y::y)  
+			(EnemyUnitWME x::ex y::ey isFlyer==true ID::targetID)  
+			(UnitWME.distance(x, y, ex, ey) < 20)    
+		}) wait;
+   
+		act attackUnit(unitID, targetID);
+		subgoal WaitFrames(24);  
+	}
+	     
+    sequential behavior defendBaseAir() {    
+        int ex, ey, nx, ny, unitID, typeID, frameCount; 
+	    AttackUnitWME unit;
+ 
+		with (success_test {  
+			(TimerWME frameCount::frameCount) 
+			unit = (AttackUnitWME ID::unitID order!=AttackMove order!=AttackUnit squadID==0 task!=FIGHTER_FLEE canAttackAir==true lastMoved::lastMoved)
+			(frameCount > (lastMoved + 150))
+			(EnemyUnitWME x::ex y::ey burrowed==false isFlyer==true) 
+			(NexusWME x::nx y::ny)   
+			(Math.abs(ex - nx) < 24 && Math.abs(ey - ny) < 24)
+		}) wait; 
+
+		mental_act { 
+			unit.setLastMoved(frameCount);			
+		}
+ 
+		act attackMoveTile(unitID, ex, ey);
+		subgoal WaitFrames(24);  
+	}    
+ 
+    sequential behavior defendBaseCaster() {    
+        int ex, ey, nx, ny, unitID, typeID, frameCount; 
+	    CasterUnitWME unit; 
+        boolean isFlyer; 
+     
+		with (success_test {     
+			(TimerWME frameCount::frameCount)  
+			unit = (CasterUnitWME ID::unitID order!=AttackMove order!=AttackUnit squadID==0 isFlyer==true typeID::typeID lastMoved::lastMoved) 
+			(frameCount > (lastMoved + 150))
+			(EnemyUnitWME x::ex y::ey burrowed==false isFlyer::isFlyer) 
+			(typeID != Protoss_Corsair || isFlyer==true) 
+			(NexusWME x::nx y::ny)   
+			(Math.abs(ex - nx) < 24 && Math.abs(ey - ny) < 24)
+		}) wait; 
+
+		mental_act { 
+			unit.setLastMoved(frameCount);			
+		}
+ 
+		act attackMoveTile(unitID, ex, ey);
+		subgoal WaitFrames(24);  
+	}    
+  
+	sequential behavior createSquad() {
+		int squadID, x, y; 
+ 		SquadWME squad; 
+	 	  
+		with (success_test { 
+		    (ReconWME NumFreeForces>=minSquadSize)   
+			(ParticleWME x::x y::y)   
+		}) wait;  
+        
+		mental_act {
+			squadID = ++squadCounter;			 
+		    Logger.print("Squad", "Forming Squad: " + squadID);
+		    minSquadSize = Math.min(minSquadSize + 1, maxSquadSize);		    
+		     
+			squad = new SquadWME(squadID);
+			squad.createSquad(); 
+		} 
+   
+		subgoal WaitFrames(100);    
+		act squadAttackTile(squadID, x, y); 		
+		
+		mental_act { 
+			BehavingEntity.getBehavingEntity().addWME(squad);				
+		}
+ 		   
+		spawngoal manageSquadGrouping(squadID); 
+	} 
+  
+	sequential behavior manageSquadGrouping(int squadID) {		 
+		with (persistent when_succeeds) subgoal regroupSquad(squadID);
+	}  
+  
+	sequential behavior regroupSquad(int squadID) {		
+		precondition {
+			(Logger.print("Squad", "Checking regroup behavior: " + squadID)) 
+			squad = (SquadWME squadID==squadID size>1 enemyDistance>=20)  
+			(Logger.print("Squad", "Entered regroup behavior: " + squadID)) 
+			(ParticleWME) // don't regroup if scattering
+		} 
+ 		
+		context_condition {
+			(SquadWME squadID==squadID size>1 enemyDistance>=20)  
+		}
+ 		
+		specificity 2; 
+		subgoal WaitFrames(120);  
+  
+		// wait for a large spread 
+ 		with (success_test { 
+			(SquadWME squadID==squadID spreadExceeded==true)   
+		}) wait;   
+ 		     
+		mental_act {    
+			Logger.print("Squad", "Squad is regrouping");  
+			squad.regroup(false); 
+			squad.setRegrouping(true);
+		}   
+ 
+		// wait for units to regroup 
+		with (success_test {  
+			(SquadWME squadID==squadID spreadFixed==true)    
+		}) wait;   
+    
+		mental_act {    
+			squad.setRegrouping(false);
+		}   
+		
+		with (ignore_failure) subgoal squadSelectTarget(squadID); 
+	}   
+ 
+  
+	sequential behavior regroupSquad(int squadID) {		
+		specificity 1;
+ 
+		subgoal squadSelectTarget(squadID); 
+		fail_step; 
+	}  
+
+	sequential behavior squadBreakup() { 
+ 	    SquadWME squad;
+		
+		with (success_test {          
+			squad = (SquadWME isIdle==true hasRetreated==true)     
+			(Logger.print("Squad", "Breaking up squad: " + squad.getSquadID()))
+		}) wait;   
+   
+		mental_act {
+			squad.breakUp();
+		}
+ 			 
+		subgoal WaitFrames(24);  
+	}
+      
+	sequential behavior squadSelectTarget() { 
+		int squadID; 
+ 	        
+		with (success_test {       
+			(SquadWME isIdle==true squadID::squadID isRetreating==false hasRetreated==false)    
+			(Logger.print("Squad", "Detected idle squad: " + squadID))
+		}) wait;   
+     
+		subgoal squadSelectTarget(squadID);     
+		subgoal WaitFrames(24);  
+	}  
+
+	sequential behavior squadSelectTarget(int squadID) {
+		precondition { 
+			(SquadWME squadID==squadID enemyDistance<20 canAttackAir::canAttackAir)
+			(EnemyUnitWME x::ex y::ey burrowed==false isFlyer==false)
+			(NexusWME x::nx y::ny) 
+			(Math.abs(ex - nx) < 24 && Math.abs(ey - ny) < 24)
+			(Logger.print("Squad", "Squad defending base: " + squadID))
+		}
+  	   
+		specificity 5;   
+		act squadAttackTile(squadID, ex, ey);
+	} 
+  
+	sequential behavior squadSelectTarget(int squadID) {
+		precondition { 
+			(SquadWME squadID==squadID enemyDistance<20 canAttackAir::canAttackAir)
+			(EnemyUnitWME x::x y::y isFlyer::isFlyer)
+			(canAttackAir || !isFlyer) // make sure the squad can attack the target 
+			(Logger.print("Squad", "Squad attacking enemy location: " + squadID))
+		}
+	   
+		specificity 4;  
+		act squadAttackTile(squadID, x, y);
+	} 
+        
+	sequential behavior squadSelectTarget(int squadID) {
+		precondition {
+			(SquadWME squadID==squadID isRegrouping==false canAttackAir::canAttackAir)
+			(EnemyUnitWME x::x y::y isFlyer::isFlyer)
+			(canAttackAir || !isFlyer) // make sure the squad can attack the target 
+			(Logger.print("Squad", "Squad attacking enemy location: " + squadID))
+		}
+	   
+		specificity 3; 
+		act squadAttackTile(squadID, x, y);
+	}  
+      
+	sequential behavior squadSelectTarget(int squadID) {
+		precondition {  
+			(SquadWME squadID==squadID isRegrouping==false canAttackAir::canAttackAir)  
+			(ParticleWME x::x y::y isFlyer::isFlyer)     
+			(canAttackAir || !isFlyer) // make sure the squad can attack the target 
+			(Logger.print("Squad", "Squad attacking particle location: " + squadID))
+		}
+	 
+		specificity 2; 
+		act squadAttackTile(squadID, x, y);
+	} 
+  
+	sequential behavior squadSelectTarget(int squadID) {
+		specificity 1; 
+		subgoal WaitFrames(48);  
+	} 
+	      
+	sequential behavior deleteSquad() {  
+		SquadWME squad;
+		int squadID;
+ 	 
+		with (success_test {
+			squad = (SquadWME size==0 squadID::squadID)   
+		}) wait;   
+
+		mental_act {
+			BehavingEntity.getBehavingEntity().deleteWME(squad);				
+			Logger.print("Squad", "Deleting squad: " + squadID);
+		} 
+	}       
+	     
+	sequential behavior squadRetreat() {   
+		SquadWME squad;
+		int squadSupply, enemySupply, squadID;
+ 	    
+		with (success_test { 
+			squad = (SquadWME baseDistance>=20 squadSupply::squadSupply enemySupply::enemySupply isRetreating==false squadID::squadID)     
+			(enemySupply > squadSupply) 
+			(Logger.print("Squad", "Squad is retreating: "))
+		}) wait;   
+    
+		mental_act { 
+			squad.retreat();   
+		}      
+		
+		spawngoal manageRetreat(squad, squadID); 		   
+		subgoal WaitFrames(24);
+	}  
+   
+	sequential behavior squadMerge() {    
+		int squadID;
+		int x, y;
+		SquadWME squad;
+	
+		with (success_test { 
+			(ParticleWME x::x y::y)    
+			(SquadWME.canMergeSquads()) 
+		}) wait;   
+
+		mental_act {
+			squadID = ++squadCounter;		 	 
+		    Logger.print("Squad", "Merging Squad: " + squadID);
+		    
+			squad = new SquadWME(squadID);
+			squad.mergeSquads(); 
+		}  
+     
+		subgoal WaitFrames(100);      
+		act squadAttackTile(squadID, x, y); 		 
+		
+		mental_act { 
+			BehavingEntity.getBehavingEntity().addWME(squad);				
+		}
+ 		   
+		spawngoal manageSquadGrouping(squadID); 
+		subgoal WaitFrames(48);
+	}
+ 
+	sequential behavior manageRetreat(SquadWME squad, int squadID) {
+		mental_act {
+			squad.setRetreating(true);
+		}
+	  
+		subgoal WaitFrames(48);   		
+		subgoal stopRetreat(squad, squadID); 		
+	}
+  
+	// stop retreating and attack again  
+	sequential behavior stopRetreat(SquadWME squad, int squadID) {  
+		precondition { 
+			(SquadWME squadID==squadID squadSupply::squadSupply enemySupply::enemySupply)     
+			(squadSupply > enemySupply + 6)   
+			(Logger.print("Squad", "Squad is stopping retreat "))
+		}
+		specificity 2;
+   
+		mental_act { 
+			squad.stopRetreat();
+		}   		 
+	}
+
+	// continue to retreat 
+	sequential behavior stopRetreat(SquadWME squad, int squadID) { 
+		specificity 1;
+		
+		mental_act {
+			squad.setRetreating(false);
+		}  
+	}
+    
+	sequential behavior rallyUnits() {
+		int unitID, x, y, forces; 
+        AttackUnitWME unit;            
+        MapWME map;
+		double theta;
+ 
+		with (success_test {
+			!(EnemyUnitWME)  
+			unit = (AttackUnitWME order==PlayerGuard active==true squadID==0 ID::unitID x::x y::y task==FIGHTER_IDLE) 
+		    map = (MapWME)
+		    (Logger.print("ABL", "Rallying unit (prepareAttack): " + unitID)) 
+		}) wait;  
+    
+		mental_act { 
+ 			unit.setTask(FIGHTER_GUARD);
+		
+			Point rally = map.getRallyPoint(x, y);
+			if (rally != null) {
+				theta = Math.random()*2.0*Math.PI; 
+				x = rally.x;
+				y = rally.y;  
+				 
+				x += (int)(Math.cos(theta)*3.5); 
+				y += (int)(Math.sin(theta)*3.5);
+			}   
+		}  
+      
+		act attackMoveTile(unitID, x, y);
+		subgoal WaitFrames(2); 
+    }   
+  
+	sequential behavior unblockChokes() { 
+		int unitID, x, y; 
+        MapWME map;	  
+	  
+		with (success_test {  
+			(PlayerUnitWME typeID!=Protoss_Probe order==PlayerGuard active==true squadID==0 ID::unitID x::x y::y)  
+		    map = (MapWME)
+		    (map.chokeDistance(x, y) <= 2) 
+		    (Logger.print("ABL", "Moving unit to unblock choke: " + unitID)) 
+		}) wait;  
+	 
+		mental_act { 
+			x += -2 + (int)(5.0*Math.random());
+			y += -2 + (int)(5.0*Math.random());			 		
+		} 
+		   
+		act attackMoveTile(unitID, x, y); 
+		subgoal WaitFrames(48); 
+	}
+   
+	/** 
+	 * In attack mode, but no enemy units or particles.
+	 */ 
+	sequential behavior scatterAttack() {
+		int unitID, x, y;
+        AttackUnitWME unit;             
+ 	 
+		with (success_test { 
+			unit = (AttackUnitWME squadID!=0 order==PlayerGuard ID::unitID)
+			!(ParticleWME)
+			(MapWME scatterX::x scatterY::y) 
+		}) wait;  
+ 
+		mental_act { 
+			unit.setPreviousHealth();
+			System.err.println("Ground units Scattering");
+		}
+		
+		act attackMoveTile(unitID, x, y);
+    }    
+      
+    sequential behavior observerSupport() {
+        int unitID, allyID;
+ 
+		with (success_test { 
+			(ObserverWME ID::unitID order==PlayerGuard)  
+			(AttackUnitWME ID::allyID squadID!=0)
+		    (Logger.print("ABL", "Obs follow"))
+		}) wait; 
+
+		act follow(unitID, allyID);
+		subgoal WaitFrames(12); 
+	} 
+
+    sequential behavior observerFlee() {
+        int unitID, allyID;
+ 
+		with (success_test { 
+			!(SquadWME isRetreating==false)   
+			(ObserverWME ID::unitID order!=Follow)  
+			(AttackUnitWME ID::allyID)  
+		    (Logger.print("ABL", "Obs Flee, no squads"))
+		}) wait;  
+ 
+		act follow(unitID, allyID);
+		subgoal WaitFrames(24);  
+	} 
+ 
+    sequential behavior revealCloakedUnits() {
+        int ex, ey, unitID, frameCount, lastMoved;
+		ObserverWME obs;
+ 
+		with (success_test {
+			(EnemyUnitWME x::ex y::ey cloaked==true typeID!=Protoss_Observer)
+			(TimerWME frameCount::frameCount) 
+			obs = (ObserverWME ID::unitID lastMoved::lastMoved)  
+			(frameCount > (lastMoved + 300))
+		    (Logger.print("ABL", "Obs revealing cloaked"))
+		}) wait;
+ 
+		mental_act { 
+			obs.setLastMoved(frameCount);			
+		}
+		
+		act rightClickTile(unitID, ex, ey);
+		subgoal WaitFrames(48);
+	} 
+   
+    sequential behavior revealBurrowedUnits() {
+        int ex, ey, unitID, frameCount, lastMoved;
+		ObserverWME obs;
+  
+		with (success_test {
+			(EnemyUnitWME x::ex y::ey burrowed==true)
+			(TimerWME frameCount::frameCount)
+			obs = (ObserverWME ID::unitID lastMoved::lastMoved)  
+			(frameCount > (lastMoved + 500)) 			
+		    (Logger.print("ABL", "Obs revealing burrowed"))
+		}) wait;
+ 
+		mental_act {
+			obs.setLastMoved(frameCount);			
+		}
+		
+		act rightClickTile(unitID, ex, ey);
+		subgoal WaitFrames(48);
+	}
+   
+    sequential behavior groundDefendBase() { 
+        int ex, ey, nx, ny, unitID, typeID;
+  
+		with (success_test {
+			(ZealotWME ID::unitID order==PlayerGuard)
+			(EnemyUnitWME x::ex y::ey burrowed==false isFlyer==false)
+			(NexusWME x::nx y::ny)
+			(Math.abs(ex - nx) < 20 && Math.abs(ey - ny) < 20)
+		}) wait;
+
+		act attackMoveTile(unitID, ex, ey);
+		subgoal WaitFrames(2);  
+	}    
+        
+    sequential behavior airDefendBase() {  
+        int ex, ey, nx, ny, unitID, typeID;
+  
+		with (success_test {
+			(DragoonWME ID::unitID order==PlayerGuard)
+			(EnemyUnitWME x::ex y::ey burrowed==false typeID!=Protoss_Observer)
+			(NexusWME x::nx y::ny)
+			(Math.abs(ex - nx) < 20 && Math.abs(ey - ny) < 20)
+		}) wait; 
+
+		act attackMoveTile(unitID, ex, ey);
+		subgoal WaitFrames(2); 
+	}    
+  
+    
+    /**
+     * Fall back if damage taken.
+     */
+	sequential behavior flee() {
+		int unitID, nexusID, task;
+        DragoonWME unit;             
+	  
+		with (success_test { 
+			(ReconWME enemyTanks==false enemyBunkers==false enemyCannons==false enemySunkens==false)
+			unit = (DragoonWME task!=FIGHTER_FLEE takenDamage==true ID::unitID groundCooldown>0 groundCooldown<26 order==AttackUnit) 
+ 			(NexusWME ID::nexusID)	
+		}) wait; 
+		
+		mental_act { 
+			unit.setTask(FIGHTER_FLEE);			 
+		}
+  
+		act rightClickUnit(unitID, nexusID);
+		spawngoal flee(unit, unitID, 24);	
+		subgoal WaitFrames(1);
+	} 
+
+	sequential behavior fleeDamage() {
+		int unitID, nexusID, task;
+        DragoonWME unit;           
+ 	  
+		with (success_test { 
+			unit = (DragoonWME task!=FIGHTER_FLEE takenDamage==true hitPoints<90 ID::unitID groundCooldown>0 groundCooldown<26 order==AttackUnit)
+//			(task==FIGHTER_ATTACK || task==FIGHTER_GUARD || task==FIGHTER_IDLE)
+ 			(NexusWME ID::nexusID)
+		}) wait; 
+		 
+		mental_act {
+			unit.setTask(FIGHTER_FLEE);			 
+		} 
+ 
+		act rightClickUnit(unitID, nexusID);
+		spawngoal flee(unit, unitID, 24);	
+		subgoal WaitFrames(1);
+	} 
+ 
+	/**
+     * Hold to fire then re-engage.
+     */	
+	sequential behavior flee(PlayerUnitWME unit, int unitID, int delay) {
+		subgoal WaitFrames(delay);
+		
+		mental_act {
+			unit.setPreviousHealth();
+			unit.setTask(FIGHTER_ATTACK);			
+		}
+
+		// find a target
+		subgoal reattack(unitID);
+	}   
+
+	/** 
+	 * Re-initiate the attack.
+	 */	
+	sequential behavior reattack(int unitID) {
+		precondition {
+			(EnemyUnitWME x::x y::y)
+		}
+		specificity 2;
+		
+		act attackMoveTile(unitID, x, y);  
+	}
+
+	sequential behavior reattack(int unitID) {
+		precondition {
+			(ParticleWME x::x y::y)
+		}
+		specificity 1;
+		
+		act attackMoveTile(unitID, x, y);
+	}    
+      
+	sequential behavior casterAssignSquad() {
+		CasterUnitWME unit; 
+		SquadWME squad; 
+		int x, y, typeID; 
+		boolean hasStorm; 
+		   
+		with (success_test { 
+			unit = (CasterUnitWME squadID==0 active==true merged==false x::x y::y typeID::typeID)   
+ 	       	(PlayerWME PsiStorm::hasStorm) 
+			(typeID!=Protoss_High_Templar || hasStorm) // dont use templar unless storm is ready 
+			squad = (SquadWME)  
+			(Logger.print("Squad", "Assigning caster to a squad"))
+		}) wait;     
+		 
+		mental_act {
+			unit.setSquadID(squad.getClosestSquadID(x, y));
+		} 
+		
+		subgoal WaitFrames(12);		
+	} 
+ 
+	sequential behavior archonAssignSquad() { 
+		ArchonWME unit; 
+		SquadWME squad;  
+		int x, y, unitID, sx, sy; 
+ 		    
+		with (success_test {    
+			squad = (SquadWME)    
+			unit = (ArchonWME squadID==0 active==true x::x y::y ID::unitID)    
+			(Logger.print("Squad", "Assigning archon to a squad"))
+		}) wait;     
+		 
+		mental_act {
+			unit.setSquadID(squad.getClosestSquadID(x, y));
+
+			sx = x;
+			sy = y;			
+			Point center = squad.getCenter(false); 
+			if (center != null) {
+				sx = center.x;
+				sy = center.y;
+			}
+		} 
+		
+		act attackMoveTile(unitID, sx, sy); 
+		subgoal WaitFrames(12);		
+	} 
+ 
+	sequential behavior attackerAssignSquad() { 
+		AttackUnitWME unit;  
+		SquadWME squad; 
+		int x, y; 
+		   
+		with (success_test {   
+			unit = (AttackUnitWME squadID==0 active==true x::x y::y)   
+			squad = (SquadWME)     
+			(UnitWME.distance(x, y, squad) < 10) 
+			(Logger.print("Squad", "Assigning idle attacker to a squad"))
+		}) wait;     
+		 
+		mental_act { 
+			unit.setSquadID(squad.getSquadID());
+		} 
+		
+		subgoal WaitFrames(48);		
+	} 
+	    
+	sequential behavior casterFollowSquad() {
+		int unitID, squadID, x, y, targetID;
+		CasterUnitWME unit;
+ 		  
+		with (success_test {   
+			unit = (CasterUnitWME order!=Follow order!=PsiStorm order!=AttackMove order!=AttackUnit squadID!=0 squadID::squadID ID::unitID active==true merged==false)
+			(AttackUnitWME squadID==squadID ID::targetID x::x y::y)  
+			(unit.distance(x, y) > 3)
+			(Logger.print("Squad", "Telling caster to follow"))
+		}) wait;      
+		
+		act follow(unitID, targetID); 
+		subgoal WaitFrames(12);
+	}	
+           
+  	sequential behavior casterRetreat() {
+		CasterUnitWME unit;
+		int x, y, unitID, squadID;
+		  
+		with (success_test {
+			unit = (CasterUnitWME squadID!=0 squadID::squadID ID::unitID active==true merged==false)    
+			(!SquadWME.squadExist(squadID))
+//			!(SquadWME squadID==squadID)		// BAD!!!! 
+			(BuildingWME x::x y::y)	// find a base to flee to
+			(Logger.print("Squad", "Removing caster from a squad"))
+		}) wait;     
+ 		
+ 		mental_act {
+			unit.setSquadID(0);
+		} 
+		
+		act rightClickTile(unitID, x, y);		 
+		subgoal WaitFrames(12);
+	}
+ 
+	sequential behavior psiStorm() {
+    	int unitID, enemyID; 
+    	int x, y, ex, ey; 
+		EnemyUnitWME enemy;
+    	   
+		with (success_test {
+        	(PlayerWME PsiStorm==true)
+        	(HighTemplarWME ID::unitID energy>=75 order!=PsiStorm x::x y::y) 
+        	enemy = (EnemyUnitWME isBuilding==false ID::enemyID x::ex y::ey typeID!=Zerg_Overlord)  
+        	(enemy.distance(x, y) <= 16)     
+        	(UnitWME.friendlyDistance(ex, ey) > 2) 
+        	(Logger.print("ABL", "Using Psi Storm")) 
+		}) wait;      
+          
+		act useTechTarget(unitID, Psionic_Storm, enemyID);
+		subgoal WaitFrames(24);
+   	}        
+
+    sequential behavior mergeArchon() { 
+    
+        HighTemplarWME templar1;
+        HighTemplarWME templar2;  
+        int ID1, ID2;
+           
+        with (success_test { 
+        	templar1 = (HighTemplarWME active==true merged==false ID::ID1 x::x1 y::y1 energy<50) 
+        	templar2 = (HighTemplarWME active==true merged==false ID!=ID1 ID::ID2 x::x2 y::y2 energy<50)        	
+			(UnitWME.distance(x1, y1, x2, y2) < 20)  
+   			(Logger.print("ABL", "Warping Archon")) 
+		}) wait;        
+
+    	mental_act {
+			templar1.setMerged();	        
+			templar2.setMerged();	        
+   		}
+        
+        act useTechTarget(ID1, Archon_Warp, ID2);
+		subgoal WaitFrames(6);
+		spawngoal clearMergedFlag(templar1, templar2); 
+	}    
+ 
+    sequential behavior clearMergedFlag(HighTemplarWME templar1, HighTemplarWME templar2) {    
+		subgoal WaitFrames(240);
+		  
+		mental_act {  
+			templar1.setNotMerged(); 
+			templar2.setNotMerged(); 
+		}
+    }
+ 
+    sequential behavior trainInterceptors() {
+    	int unitID;  
+    	
+		with (success_test {
+        	(CarrierWME interceptorCount<8 trainTimer==0 ID::unitID)
+        	(PlayerWME minerals>=25)
+		}) wait; 
+        
+		act train(unitID, Protoss_Interceptor);		
+		subgoal WaitFrames(48);
+   	}      
+    
+/******************************************************************************
+ * Utilities
+ *****************************************************************************/
+
+    /**
+     * waits for a specified number of frames
+     */
+	sequential behavior WaitFrames(int frames) {
+		int finishFrame;
+	    mental_act {
+	    	finishFrame = ABLStarCraftBot.getGame().getGameFrame() + frames;
+	    }
+
+	    with ( success_test { (ABLStarCraftBot.getGame().getGameFrame() >= finishFrame) } ) wait;
+	}
+
+	sequential behavior continueBehavior(boolean success) {
+		precondition { (success==true) }
+		succeed_step;
+	}	
+
+	sequential behavior continueBehavior(boolean success) {
+		precondition { (success==false) }
+		succeed_step;
+	}	
+	
+	// keypress trigged behaviors
+	sequential behavior keyPressListener() {
+		with (persistent) subgoal processKeypresses();
+	}	
+	 
+	sequential behavior processKeypresses() {
+		KeyPressWME event;
+		int keycode;
+	
+	    with ( success_test { 
+	    	event = (KeyPressWME keycode::keycode) 
+	    }) wait;
+
+		with (ignore_failure) subgoal keyPress(keycode);
+
+		mental_act {
+   			Logger.print("ABL", "keycode: " + keycode);
+			BehavingEntity.getBehavingEntity().deleteWME(event);				
+		}			
+	}
+	
+	sequential behavior keyPress(int keycode) {
+		precondition {(keycode==VK_M)}		
+		spawngoal focusMinerals();
+	}
+
+	sequential behavior keyPress(int keycode) {
+		precondition {(keycode==VK_G)}		
+		spawngoal focusGas();
+	}
+
+/*  
+	sequential behavior keyPress(int keycode) {
+		precondition {(keycode==VK_R)}		
+		spawngoal retreat();
+	} 
+*/
+
+/******************************************************************************
+ * Initial Tree
+ *****************************************************************************/
+
+    /**
+     * Inital behavior tree.
+     */
+    initial_tree {
+    	subgoal startup();
+    }
+}
