@@ -1,0 +1,9 @@
+7	Protoss_FE_Pylon 
+10	Protoss_Forge
+11	Protoss_Photon_Cannon
+12	Protoss_Photon_Cannon
+15	Protoss_Nexus
+15	Protoss_Pylon
+16	Protoss_Gateway
+17	Protoss_Assimilator 
+17	Protoss_Gateway

@@ -1,0 +1,8 @@
+7	Protoss_FE_Pylon
+12	Protoss_Nexus
+13	Protoss_Gateway
+14	Protoss_Gateway 
+16	Protoss_Pylon
+17	Protoss_Assimilator    
+18	Protoss_Zealot
+20	Protoss_Zealot
