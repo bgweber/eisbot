@@ -1,0 +1,8 @@
+8	Protoss_Pylon
+10	Protoss_Gateway
+11	Protoss_Assimilator
+13	Protoss_Cybernetics_Core
+15	Protoss_Gateway 
+15	Singularity_Charge
+15	Protoss_Dragoon
+16	Protoss_Pylon
