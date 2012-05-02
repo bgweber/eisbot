@@ -1,5 +1,5 @@
 package eisbot.abl;
-
+ 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,21 +12,15 @@ import javax.tools.ToolProvider;
 import abl.compiler.Abl;
 
 /**
-JVM args:
- 
--DParticleFilterMode=OptimizedParticles
--Xmx512M 
+ *  Script for compiling ABL source, compiling generated Java, and running the agent. 
  */
 public class Launcher { 
 
 	public static void main(String[] args) {
- 		 
-//		String botName = "ProtossCBRBot";		
-		String botName = "EISBotAAAI";		
+
+		String botName = "EISBot";		
 		System.setProperty("ABLBotName", botName); 
 
-		// run the ABL compiler 
-//		Abl.main(new String[] { "-g2", "-d", "src", "src/eisbot/abl/abl/ProtossBot.abl" });
 		Abl.main(new String[] { "-d", "src", "src/eisbot/abl/abl/" + botName + ".abl" });
 
 		// Run the java compiler on generated classes  

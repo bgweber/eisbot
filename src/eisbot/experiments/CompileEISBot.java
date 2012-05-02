@@ -14,13 +14,13 @@ import abl.compiler.Abl;
 public class CompileEISBot {
 
 	public static void main(String[] args) {  
-
-		String botName = "EISBotAAAI";		  
+ 
+		String botName = "EISBot";		  
 
 		// run the ABL compiler 
-//		Abl.main(new String[] { "-g2", "-d", "src", "src/eisbot/abl/abl/ProtossBot.abl" }); 
+//		Abl.main(new String[] { "-d", "-d", "src", "src/eisbot/abl/abl/" + botName + ".abl" });
 		Abl.main(new String[] { "-d", "src", "src/eisbot/abl/abl/" + botName + ".abl" });
-
+ 
 		// Run the java compiler on generated classes  
 		try {					   
 			JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -30,7 +30,7 @@ public class CompileEISBot {
 					files.add(file); 
 				}
 			} 
-			
+			 
 			ArrayList<String> opts = new ArrayList<String>();
 			opts.add("-d"); 
 			opts.add("bin");
