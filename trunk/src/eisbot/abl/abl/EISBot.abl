@@ -17,8 +17,8 @@ import java.awt.Point;
 constants eisbot.abl.StarCraftConstants;
 /**
  *   
- */   
-behaving_entity EISBotAAAI { 
+ */    
+behaving_entity EISBot { 
 
 	// actions
 	register act attackMovePixel(int, int, int) with AttackMovePixel;
