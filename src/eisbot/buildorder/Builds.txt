@@ -1,0 +1,6 @@
+EnemyRace, NumBases, NumExpoChokes, Weight, Path
+Protoss, 3, 2, 1.0, src/eisbot/buildorder/buildorders/PvP.txt 
+Terran, 4, 1, 1.0, src/eisbot/buildorder/buildorders/EconFE.txt  
+Terran, 3, 2, 0.8, src/eisbot/buildorder/buildorders/10-15gate.txt 
+Terran, 2, 2, 0.6, src/eisbot/buildorder/buildorders/Default.txt 
+Zerg, 3, 2, 1.0, src/eisbot/buildorder/buildorders/Default.txt    
