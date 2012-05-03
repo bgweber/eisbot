@@ -1,3 +1,13 @@
 = Videos of EISBot =
 
 <wiki:video url="http://www.youtube.com/watch?v=y_zAfvNnSDQ"/>
+
+<wiki:video url="http://www.youtube.com/watch?v=6-ZB6bp4kWo"/>
+
+<wiki:video url="http://www.youtube.com/watch?v=sBormPn_Dd8"/>
+
+<wiki:video url="http://www.youtube.com/watch?v=MKgEYRYm1BI"/>
+
+<wiki:video url="http://www.youtube.com/watch?v=txGPuN7PXAY"/>
+
+<wiki:video url="http://www.youtube.com/watch?v=xMvqasC8D9g"/>
