@@ -55,12 +55,12 @@ Configution
  º ABL Agent: EISBot
  º Game Settings
    - Ignore terrain: false
-   - Show GUI: true
+   - Show GUI: false
    - Auto restart: false
    - Use manners: false
    - Fastest: true
    - User input: true
-   - Quit on game end: false
+   - Quit on game end: true
    - Auto camera: false
  º Build Selection
    - Script path: null
