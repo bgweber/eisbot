@@ -22,7 +22,8 @@ EISBot can be configured to run in a number of different ways. For example, the 
 
 
 * Particle Filter *
-  * `ParticleFilter.Mode` (enum): The type of particle filter to use. See ParticleFilter.ParticleFilterMode: PerfectInformation, DefaultParticles, OptimizedParticles
+  * `ParticleFilter.Mode` (enum): The type of particle filter to use. See `ParticleFilter.ParticleFilterMode`
+
 
 * Goal Formulator *
   * `GoalFormulator.Enable` (boolean): enable the CBR goal formulation component?
