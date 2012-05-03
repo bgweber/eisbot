@@ -1,5 +1,5 @@
 = EISBot Publications in BibTeX Format =
-
+{{{
 @conference{WeberCIG2010,
   title={{Reactive Planning Idioms for Multi-Scale Game AI}},
   author={Weber, B. G. and Mawhorter, P. and Mateas, M. and Jhala, A.},
@@ -17,7 +17,7 @@
    year={2009},
    organization={IEEE Press}
 } 
-
+}}}
 [http://users.soe.ucsc.edu/~bweber/pubs/weber_aiide11.pdf A Particle Model for State Estimation in Real-Time Strategy Games]
 
 [http://users.soe.ucsc.edu/~bweber/pubs/weber_goalformulation.pdf Case-Based Goal Formulation]
