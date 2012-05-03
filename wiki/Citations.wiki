@@ -9,7 +9,7 @@
   organization={IEEE Press}
 }
 
- @inproceedings{WeberCIG2009,
+@conference{WeberCIG2009,
    title={{A Data Mining Approach to Strategy Prediction}},
    author={Weber, B. G. and Mateas, M.},
    booktitle={Proceedings of the IEEE Symposium on Computational Intelligence and Games},
@@ -17,13 +17,47 @@
    year={2009},
    organization={IEEE Press}
 } 
+
+@conference{WeberAIIDE2011,
+  title={{A Particle Model for State Estimation in Real-Time Strategy Games}},
+  author={Weber, B. G. and Mateas, M. and Jhala, A.},
+  booktitle={Proceedings of AIIDE },
+  pages={103-108}, 
+  year={2011},
+  organization={AAAI Press}
+}
+
+@conference{WeberGDA2010,
+  title={{Case-Based Goal Formulation}},
+  author={Weber, B. G. and Mateas, M. and Jhala, A.},
+  booktitle={Proceedings of the AAAI Workshop on Goal-Directed Autonomy},
+  year={2010},
+  organization={AAAI Press}
+}
+
+@conference{WeberAIIDE2010,
+  title={{Applying Goal-Driven Autonomy to StarCraft}},
+  author={Weber, B. G. and Mateas, M. and Jhala, A.},
+  booktitle={Proceedings of AIIDE},
+  pages={101--106},
+  organization={AAAI Press}, 
+  year={2010} 
+}
+
+@conference{WeberAAAI2012,
+  title={{Learning from Demonstration for Goal-Driven Autonomy}},
+  author={Weber, B. G. and Mateas, M. and Jhala, A.},
+  booktitle={Proceedings of AAAI},
+  organization={AAAI Press}, 
+  year={2012} 
+}
+
+@conference{WeberACS2011,
+  title={{Building Human-Level AI for Real-Time Strategy Games}},
+  author={Weber, B. G. and Mateas, M. and Jhala, A.},
+  booktitle={Proceedings of the AAAI Fall Symposium on Advances in Cognitive Systems},
+  year={2011},
+  pages={329--336}, 
+  organization={AAAI Press}
+}
 }}}
-[http://users.soe.ucsc.edu/~bweber/pubs/weber_aiide11.pdf A Particle Model for State Estimation in Real-Time Strategy Games]
-
-[http://users.soe.ucsc.edu/~bweber/pubs/weber_goalformulation.pdf Case-Based Goal Formulation]
-
-[http://users.soe.ucsc.edu/~bweber/pubs/gda_aiide2010.pdf Applying Goal-Driven Autonomy to StarCraft]
-
-[http://users.soe.ucsc.edu/~bweber/pubs/weber-acs2011-final.pdf Building Human-Level AI for Real-Time Strategy Games]
-
-[http://users.soe.ucsc.edu/~bweber/pubs/Weber-AAAI-2012.pdf Learning from Demonstration for Goal-Driven Autonomy]
