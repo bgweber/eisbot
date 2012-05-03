@@ -1,3 +1,17 @@
 = Getting Started =
 
-How to run EISBot. 
+There are two ways to run EISBot: you can download the release and run the bot directly, or you can check out the source from SVN and from the bot from the Eclipse IDE. In order to run EISBot, it is necessary to have Java 1.6 installed. In order to compile EISBot, using Eclipse is recommended. 
+
+First, you need to set up Starcraft to interface with a BWAPI remote AI client. Instructions for setting up and using BWAPI are available [http://code.google.com/p/bwapi/wiki/UsingBWAPI here]. Note EISBot currently works with only BWAPI 3.7.2 (rev 4025). 
+
+==Running the Release version==
+
+The easiest way to get EISBot up and running is to download the most recent release on the [http://code.google.com/p/eisbot/downloads/list downloads] page. Extract the files and launch `EISBotDemo.bat`. 
+Then, start Starcraft and create a custom single player game.
+
+
+==Compiling==
+
+
+==Running from Eclipse==
+
