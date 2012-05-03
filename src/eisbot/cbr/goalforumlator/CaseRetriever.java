@@ -48,18 +48,18 @@ public class CaseRetriever {
 	private Instance gameState;	
 	long lastDebug;	
 	ArrayList<BuildOrder> actions;	
-
+ 
 	private Race race = Race.Protoss;
  
 	private Filter filter = new UnitAndBothHeavyTimingFilter();;
 
 	// Initial Case retriever properties
-	public static int PlanningWindowSize = 10; 
+	public static int PlanningWindowSize = 15; 
 	public static int ReplanningSize = 0;  
 	public static double SamplingRatio = 1; 
-	 
+	  
 	public static boolean EnablePredictor = true;
-	public static int PredictionWindowSize = 20;	
+	public static int PredictionWindowSize = 10;	
 	public static int PredictionPeriod = 24*30; 
 
 	public static boolean EnableGDA = true;

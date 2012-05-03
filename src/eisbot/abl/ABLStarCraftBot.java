@@ -266,9 +266,9 @@ public class ABLStarCraftBot implements BWAPIEventListener {
 
 		// bot settings
 		if (System.getProperty("ABLBotName") == null) {
-			System.setProperty("ABLBotName", "ProtossBuildTransitionBot");
+			System.setProperty("ABLBotName", "EISBot");
 		}
- 		
+ 		 
 		// configuration summary
 		System.out.println("Configution");
 		System.out.println(" " + ((char)186) + " ABL Agent: " + System.getProperty("ABLBotName"));
