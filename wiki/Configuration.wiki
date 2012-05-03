@@ -2,9 +2,58 @@
 
 EISBot can be configured to run in a number of different ways. For example, the GDA and particle model ablation studies used the same agent runtime with different configurations. The main way EISBot is configured is through Java system properties (e.g. -DSettings.Fastest=true). EISBot uses the following system properties:
 
-===Game Settings===  
+*Game Settings*
+  * 
+  *- GameSettings.ShowGUI (boolean): show the agent GUI?
+  *- GameSettings.AutoRestart (boolean): restart games on game end?
+  *- GameSettings.UseManners (boolean): quit when loss is detected?
+  *- GameSettings.Fastest (boolean): setSpeed(0)?
+  *- GameSettings.UserInput (boolean): enable the user to perform actions?
+  *- GameSettings.QuitOnGameEnd (boolean): end this process when the game ends?
+  *- GameSettings.AutoCamera (boolean): Enables automatic camera positioning 
+- GameSettings.IgnoreBases (boolean): disbale BWTA?
 
 ===Build Order Selection===  
 
 
 system properties 
+
+start up
+
+
+The agent configuration is displayed at start up:
+{{{
+EISBot Launching Thu May 03 12:58:18 PDT 2012
+Configution
+ º ABL Agent: EISBot
+ º Game Settings
+   - Ignore terrain: false
+   - Show GUI: true
+   - Auto restart: false
+   - Use manners: false
+   - Fastest: true
+   - User input: true
+   - Quit on game end: false
+   - Auto camera: false
+ º Build Selection
+   - Script path: null
+   - Epsilon: 0.5
+   - Base count weight: 1.0
+   - Expo chokepoint weight: 1.0
+   - History weight: 1.0
+   - History size: 1
+ º Particle Filter
+   - Mode: OptimizedParticles
+ º Goal Formulator
+   - enabled: true
+   - planning window size: 15
+   - replanning size: 0
+   - sampling ratio: 1.0
+ º Opponent Predictor
+   - enabled: true
+   - window size: 10
+   - prediction period: 720
+ º Goal Driven Autonomy (Strategy)
+   - enabled: true
+   - prediction period: 720
+}}}
