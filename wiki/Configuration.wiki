@@ -14,11 +14,39 @@ EISBot can be configured to run in a number of different ways. For example, the 
 
 *Build Order Selection*
 
+ Build Selection
+	- BuildSelector.Epsilon (double): epsilon value for build order selection
+	- BuildSelector.BaseCountWeight (double): base count weight for build order selection 
+	- BuildSelector.ExpoChokeWeight (double): expo chokepoint weight for build order selection
+	- BuildSelector.HistoryWeight (double): history (boredom) weight for build order selection
+	- BuildSelector.HistorySize (iont): number of builds to maintain in history for computing resuse weight
 
+ Particle Filter
+	- ParticleFilter.Mode (enum): The type of particle filter to use. See ParticleFilter.ParticleFilterMode 
+
+ Goal Formulator
+	- GoalFormulator.Enable (boolean): Enable the CBR goal formulation component?
+	- GoalFormulator.PlanningWindowSize (int): How many actions to plan ahead
+	- GoalFormulator.ReplanningSize (int): Minimum action window size for triggering replanning
+	- GoalFormulator.SamplingRatio (double): Ratio of training examples to use
+ 
+ Opponent Predictor 
+	- OpponentPredictor.Enable (boolean): Enable the opponent strategy prediction component?
+	- OpponentPredictor.PredictionWindowSize (int): How far to look ahead in terms of build actions?
+	- OpponentPredictor.PredictionPeriod (int): How frequent to run? (delay in game frames)
+
+ Goal Driven Autonomy
+	- GDA.Enable (boolean): Enable the opponent strategy prediction component?
 system properties 
 
 start up
 
+*Example Configuration*
+
+This configuration runs the bot in competition mode: 
+{{{
+java -DGameSettings.ShowGUI=false -DGameSettings.QuitOnGameEnd=true eisbot.experiments.EISBot
+}}}
 
 The agent configuration is displayed at start up:
 {{{
