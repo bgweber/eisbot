@@ -2,18 +2,17 @@
 
 EISBot can be configured to run in a number of different ways. For example, the GDA and particle model ablation studies used the same agent runtime with different configurations. The main way EISBot is configured is through Java system properties (e.g. -DSettings.Fastest=true). EISBot uses the following system properties:
 
-*Game Settings*
-  * 
-  *- GameSettings.ShowGUI (boolean): show the agent GUI?
-  *- GameSettings.AutoRestart (boolean): restart games on game end?
-  *- GameSettings.UseManners (boolean): quit when loss is detected?
-  *- GameSettings.Fastest (boolean): setSpeed(0)?
-  *- GameSettings.UserInput (boolean): enable the user to perform actions?
-  *- GameSettings.QuitOnGameEnd (boolean): end this process when the game ends?
-  *- GameSettings.AutoCamera (boolean): Enables automatic camera positioning 
-- GameSettings.IgnoreBases (boolean): disbale BWTA?
+* Game Settings *
+  * `GameSettings.IgnoreBases` (boolean): disbale BWTA?
+  * `GameSettings.ShowGUI` (boolean): show the agent GUI?
+  * `GameSettings.AutoRestart` (boolean): restart games on game end?
+  * `GameSettings.UseManners` (boolean): quit when loss is detected?
+  * `GameSettings.Fastest` (boolean): setSpeed(0)?
+  * `GameSettings.UserInput` (boolean): enable the user to perform actions?
+  * `GameSettings.QuitOnGameEnd` (boolean): end this process when the game ends?
+  * `GameSettings.AutoCamera` (boolean): Enable automatic camera positioning ?
 
-===Build Order Selection===  
+*Build Order Selection*
 
 
 system properties 
