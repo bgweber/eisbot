@@ -1,3 +1,10 @@
-= Getting Started =
+= EISBot Configuration =
 
-How to run EISBot. 
+EISBot can be configured to run in a number of different ways. For example, the GDA and particle model ablation studies used the same agent runtime with different configurations. The main way EISBot is configured is through Java system properties (e.g. -DSettings.Fastest=true). EISBot uses the following system properties:
+
+===Game Settings===  
+
+===Build Order Selection===  
+
+
+system properties 
