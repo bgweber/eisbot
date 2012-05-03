@@ -31,10 +31,10 @@ EISBot can be configured to run in a number of different ways. For example, the 
   * `GoalFormulator.ReplanningSize` (int): Minimum action window size for triggering replanning
   * `GoalFormulator.SamplingRatio` (double): Ratio of training examples to use
  
-* Opponent Predictor 
-  * OpponentPredictor.Enable (boolean): Enable the opponent strategy prediction component?
-  * OpponentPredictor.PredictionWindowSize (int): How far to look ahead in terms of build actions?
-  * OpponentPredictor.PredictionPeriod (int): How frequent to run? (delay in game frames)
+* Opponent Predictor *
+  * `OpponentPredictor.Enable` (boolean): Enable the opponent strategy prediction component?
+  * `OpponentPredictor.PredictionWindowSize` (int): How far to look ahead in terms of build actions?
+  * `OpponentPredictor.PredictionPeriod` (int): How frequent to run? (delay in game frames)
 
 
 * Goal Driven Autonomy *
@@ -42,7 +42,7 @@ EISBot can be configured to run in a number of different ways. For example, the 
   * `GDA.DiscrepancyPeriod` (int): How much of a discrepancy to allow (frames)?
 
 
-*Example Configuration*
+===Example Configuration===
 
 This configuration runs the bot in competition mode: 
 {{{
