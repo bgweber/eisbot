@@ -10,7 +10,7 @@ EISBot can be configured to run in a number of different ways. For example, the 
   * `GameSettings.Fastest` (boolean): setSpeed(0)?
   * `GameSettings.UserInput` (boolean): enable the user to perform actions?
   * `GameSettings.QuitOnGameEnd` (boolean): end this process when the game ends?
-  * `GameSettings.AutoCamera` (boolean): Enable automatic camera positioning ?
+  * `GameSettings.AutoCamera` (boolean): enable automatic camera positioning ?
 
 
 * Build Selection *
@@ -18,28 +18,27 @@ EISBot can be configured to run in a number of different ways. For example, the 
   * `BuildSelector.BaseCountWeight` (double): base count weight for build order selection 
   * `BuildSelector.ExpoChokeWeight` (double): expo chokepoint weight for build order selection
   * `BuildSelector.HistoryWeight` (double): history (boredom) weight for build order selection
-  * `BuildSelector.HistorySize` (int): number of builds to maintain in history for computing resuse weight
+  * `BuildSelector.HistorySize` (int): number of builds to maintain in history for computing reuse weight
 
 
 * Particle Filter *
-  * 'ParticleFilter.Mode' (enum): The type of particle filter to use. See ParticleFilter.ParticleFilterMode 
-
+  * `ParticleFilter.Mode` (enum): The type of particle filter to use. See ParticleFilter.ParticleFilterMode: PerfectInformation, DefaultParticles, OptimizedParticles
 
 * Goal Formulator *
-  * `GoalFormulator.Enable` (boolean): Enable the CBR goal formulation component?
-  * `GoalFormulator.PlanningWindowSize` (int): How many actions to plan ahead
-  * `GoalFormulator.ReplanningSize` (int): Minimum action window size for triggering replanning
-  * `GoalFormulator.SamplingRatio` (double): Ratio of training examples to use
+  * `GoalFormulator.Enable` (boolean): enable the CBR goal formulation component?
+  * `GoalFormulator.PlanningWindowSize` (int): how many actions to plan ahead
+  * `GoalFormulator.ReplanningSize` (int): minimum action window size for triggering replanning
+  * `GoalFormulator.SamplingRatio` (double): ratio of training examples to use
  
 * Opponent Predictor *
-  * `OpponentPredictor.Enable` (boolean): Enable the opponent strategy prediction component?
-  * `OpponentPredictor.PredictionWindowSize` (int): How far to look ahead in terms of build actions?
-  * `OpponentPredictor.PredictionPeriod` (int): How frequent to run? (delay in game frames)
+  * `OpponentPredictor.Enable` (boolean): enable the opponent strategy prediction component?
+  * `OpponentPredictor.PredictionWindowSize` (int): how far to look ahead in terms of build actions?
+  * `OpponentPredictor.PredictionPeriod` (int): how frequent to run? (delay in game frames)
 
 
 * Goal Driven Autonomy *
-  * `GDA.Enable` (boolean): Enable the discrepancy detection component?
-  * `GDA.DiscrepancyPeriod` (int): How much of a discrepancy to allow (frames)?
+  * `GDA.Enable` (boolean): enable the discrepancy detection component?
+  * `GDA.DiscrepancyPeriod` (int): how much of a discrepancy to allow (frames)?
 
 
 ===Example Configuration===
