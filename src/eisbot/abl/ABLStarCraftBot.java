@@ -43,7 +43,6 @@ Configuration Properties
 
  Game Settings
  	- GameSettings.IgnoreBases (boolean): disbale BWTA?
-	- GameSettings.IccupMode (boolean): run iccup script?
 	- GameSettings.ShowGUI (boolean): show the agent GUI?
 	- GameSettings.AutoRestart (boolean): restart games on game end?
 	- GameSettings.UseManners (boolean): quit when loss is detected?
