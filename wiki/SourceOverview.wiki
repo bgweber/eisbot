@@ -1,14 +1,14 @@
 = Source Overview =
 
-  * `src`
-    * `eisbot`
-      * `abl`
-      * `buildorder`
-      * `cbr`
-      * `experiments`
-      * `gui`
-      * `proxy`
-    * `jni`
+  * *src*
+    * *eisbot*
+      * *abl*
+      * *buildorder*
+      * *cbr*
+      * *experiments*
+      * *gui*
+      * *proxy*
+    * *jni*
       * C++ code for binding Java native methods to AI client calls. See the [http://code.google.com/p/jnibwapi/ JNIBWAPI] project for more details.
 
 
