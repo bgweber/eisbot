@@ -47,13 +47,8 @@ The source code is structured as follows:
         * *wmes*
           * *unit*
             * *protoss*
+              * Objects for representing specific Protoss unit types.
+            * Objects for representing unit types.
         * Objects for storing game state. These objects are used directly by ABL behaviors. 
     * *jni*
       * C++ code for binding Java native methods to AI client calls. See the [http://code.google.com/p/jnibwapi/ JNIBWAPI] project for more details.
-
-
-
-  * **
-    * **
-      * **
-        * **
