@@ -1,3 +1,9 @@
 = Agent Overview =
 
 A gentle introduction to EISBot.
+
+
+
+A visualization of EISBot's Behavior Library:
+
+http://i.imgur.com/1XTXz.png
