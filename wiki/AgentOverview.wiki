@@ -4,13 +4,34 @@ A gentle introduction to EISBot.
 
 
 
+Interface:
+
+http://i.imgur.com/1YbaD.png
+
+
+Managers:
+
+http://i.imgur.com/bOmvi.png
+
+
+Squads:
+
+http://i.imgur.com/9JocN.png
+
+
+
 A visualization of EISBot's Behavior Library:
 
 http://i.imgur.com/1XTXz.png
 
 
+
+Implementation:
+
+http://i.imgur.com/0cb2p.png
+
+
+
 particles:
+
 http://i.imgur.com/Mzx3S.png
-
-
-http://i.imgur.com/9JocN.png
