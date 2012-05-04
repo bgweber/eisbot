@@ -3,6 +3,17 @@
   * *src*
     * *eisbot*
       * *abl*
+        * *abl*
+          * Contains ABL code for specifying agent behavior.
+        * *actions*
+          * Classes for binding ABL actions to Starcraft commands.
+        * *java*
+          * Output directory for ABL compiling. Contains generated Java code
+        * *sensors*
+          * Classes for binding WMEs to sensor classes.
+        * *wmes*
+          * WMEs for tracking the internal state of the agent. 
+        * This directory contains the ABL source and bindings for ABL sensors and actions. It also contains a driver class for launcher the agent, and ABL utility classes. 
       * *buildorder*
       * *cbr*
       * *experiments*
@@ -13,7 +24,7 @@
 
 
 
-  * a
-    * b
-      * 
-        * d
+  * **
+    * **
+      * **
+        * **
