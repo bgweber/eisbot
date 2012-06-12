@@ -1,5 +1,12 @@
 = EISBot Publications in BibTeX Format =
 {{{
+@phdthesis{Weber2012,
+  title={{Integrating Learning in a Multi-Scale Agent}},
+  author={Weber, B. G.},
+  school={University of California, Santa Cruz},
+  year={2012}
+}
+
 @conference{WeberCIG2010,
   title={{Reactive Planning Idioms for Multi-Scale Game AI}},
   author={Weber, B. G. and Mawhorter, P. and Mateas, M. and Jhala, A.},
