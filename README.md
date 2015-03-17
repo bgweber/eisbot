@@ -23,7 +23,7 @@ In the [wiki](https://github.com/bgweber/eisbot/tree/wiki) section:
 
 A paperback version is also available on [Amazon](http://www.amazon.com/dp/1477614737/). 
 
-![http://users.soe.ucsc.edu/~bweber/CoverText.jpg](http://www.amazon.com/dp/1477614737/)
+![http://www.amazon.com/dp/1477614737/](http://users.soe.ucsc.edu/~bweber/CoverText.jpg)
 
 ###Publications###
 
