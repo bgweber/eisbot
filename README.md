@@ -48,14 +48,13 @@ Work on this project has resulted in the following publications. They are listed
 [http://users.soe.ucsc.edu/~bweber/pubs/weber-acs2011-final.pdf Building Human-Level AI for Real-Time Strategy Games]
   * Provide an overview of many of the capabilities necessary for expert-level Starcraft gameplay. The paper describes how many of these capabilities are emulated in EISBot and provides an initial evaluation of EISBot versus human opponents.
 
-
 ###In the Press###
 
-  * Edge Magazine: [http://www.edge-online.com/features/future-videogame-ai?page=2 The future of videogame AI]
-  * New Scientist: [http://www.newscientist.com/article/mg20727745.100-online-games-are-a-gold-mine-for-design-ideas.htm Online games are a gold mine for design ideas]
-  * New Scientist: [http://www.newscientist.com/article/mg20827845.400-machine-intelligence-put-to-test-in-alien-world.html Machine intelligence put to test in alien world]
-  * Game Pro: [http://web.archive.org/web/20110607063926/http://www.gamepro.com/article/features/214810/starcraft-bot-plays-like-pro/ Building a StarCraft bot that plays like a pro]
-  * CNET: [http://news.cnet.com/8301-27076_3-20000266-248.html GDC: What's next for video game AI?]
+  * Edge Magazine: [The future of videogame AI](http://www.edge-online.com/features/future-videogame-ai?page=2)
+  * New Scientist: [Online games are a gold mine for design ideas](http://www.newscientist.com/article/mg20727745.100-online-games-are-a-gold-mine-for-design-ideas.htm) 
+  * New Scientist: [ Machine intelligence put to test in alien world](http://www.newscientist.com/article/mg20827845.400-machine-intelligence-put-to-test-in-alien-world.html)
+  * Game Pro: [Building a StarCraft bot that plays like a pro](http://web.archive.org/web/20110607063926/http://www.gamepro.com/article/features/214810/starcraft-bot-plays-like-pro/) 
+  * CNET: [GDC: What's next for video game AI?](http://news.cnet.com/8301-27076_3-20000266-248.html) 
 
 ###Acknowledgments###
 
